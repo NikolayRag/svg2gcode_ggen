@@ -50,16 +50,16 @@ class GGen():
             if viewbox:
                 _, _, width, height = viewbox.split()                
 
-        if width == None or height == None:
+        if width != None and height != None:
+            width = float(width)
+            height = float(height)
+
+            scale_x = self.maxX / max(width, height)
+            scale_y = self.maxY / max(width, height)
+            self.scale = min(scale_x, scale_y)
+
+        else:
             print("Unable to get width and height for the svg")
-            sys.exit(1)
-
-        width = float(width)
-        height = float(height)
-
-        scale_x = self.maxX / max(width, height)
-        scale_y = self.maxY / max(width, height)
-        self.scale = min(scale_x, scale_y)
 
 
 
