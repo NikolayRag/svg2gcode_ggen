@@ -4,12 +4,19 @@ import sys
 import xml.etree.ElementTree as ET
 import shapes as shapes_pkg
 from shapes import point_generator
-from config import *
 
-def generate_gcode(root):
-    svg_shapes = set(['rect', 'circle', 'ellipse', 'line', 'polyline', 'polygon', 'path'])
-    
-    
+def generate_gcode(
+    root,
+    smoothness = 0.02,
+    bed_max_x = 200,
+    bed_max_y = 300,
+
+    svg_shapes = set(['rect', 'circle', 'ellipse', 'line', 'polyline', 'polygon', 'path']),
+    preamble = 'G90',
+    shape_preamble = '',
+    shape_postamble = '',
+    postamble = ''
+):
     outG = []
     width = root.get('width')
     height = root.get('height')
