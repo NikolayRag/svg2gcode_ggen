@@ -20,7 +20,7 @@ def generate_gcode():
             _, _, width, height = viewbox.split()                
 
     if width == None or height == None:
-        print "Unable to get width and height for the svg"
+        print("Unable to get width and height for the svg")
         sys.exit(1)
 
     width = float(width)
@@ -29,7 +29,7 @@ def generate_gcode():
     scale_x = bed_max_x / max(width, height)
     scale_y = bed_max_y / max(width, height)
 
-    print preamble 
+    print(preamble)
     
     for elem in root.iter():
         
@@ -45,14 +45,14 @@ def generate_gcode():
             m = shape_obj.transformation_matrix()
 
             if d:
-                print shape_preamble 
+                print(shape_preamble)
                 p = point_generator(d, m, smoothness)
                 for x,y in p:
                     if x > 0 and x < bed_max_x and y > 0 and y < bed_max_y:  
-                        print "G1 X%0.1f Y%0.1f" % (scale_x*x, scale_y*y) 
-                print shape_postamble
+                        print( "G1 X%0.1f Y%0.1f" % (scale_x*x, scale_y*y) )
+                print(shape_postamble)
 
-    print postamble 
+    print(postamble)
 
 if __name__ == "__main__":
     generate_gcode()
