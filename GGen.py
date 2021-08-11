@@ -21,6 +21,10 @@ class GGen():
     postamble = ''
 
 
+    scale = 1.
+
+
+
     def __init__(self,
         _rootET,
         _smoothness = 0.02,
