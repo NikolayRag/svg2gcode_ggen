@@ -12,6 +12,7 @@ class GGen():
 
     rootET = None
     smoothness = 1
+    feedRate = 0
     maxX = 0
     maxY = 0
 
@@ -28,6 +29,7 @@ class GGen():
     def __init__(self,
         _rootET,
         _smoothness = 0.02,
+        _feedRate = 10000,
         _maxX = 200,
         _maxY = 300,
 
@@ -38,6 +40,7 @@ class GGen():
     ):
         self.rootET = _rootET
         self.smoothness = _smoothness
+        self.feedRate = _feedRate
         self.maxX = _maxX
         self.maxY = _maxY
 
@@ -68,7 +71,7 @@ class GGen():
 
 
     def generate(self):
-        outGCode = []
+        outGCode = [f'F{self.feedRate}']
 
         outGCode.append(self.preamble)
         
