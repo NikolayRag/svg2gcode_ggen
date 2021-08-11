@@ -10,6 +10,7 @@ def generate_gcode(root):
     svg_shapes = set(['rect', 'circle', 'ellipse', 'line', 'polyline', 'polygon', 'path'])
     
     
+    outG = []
     width = root.get('width')
     height = root.get('height')
     if width == None or height == None:
@@ -27,7 +28,7 @@ def generate_gcode(root):
     scale_x = bed_max_x / max(width, height)
     scale_y = bed_max_y / max(width, height)
 
-    print(preamble)
+    outG.append(preamble)
     
     for elem in root.iter():
         
@@ -43,12 +44,14 @@ def generate_gcode(root):
             m = shape_obj.transformation_matrix()
 
             if d:
-                print(shape_preamble)
+                outG.append(shape_preamble)
                 p = point_generator(d, m, smoothness)
                 for x,y in p:
                     if x > 0 and x < bed_max_x and y > 0 and y < bed_max_y:  
-                        print( "G1 X%0.1f Y%0.1f" % (scale_x*x, scale_y*y) )
-                print(shape_postamble)
+                        outG.append( "G1 X%0.1f Y%0.1f" % (scale_x*x, scale_y*y) )
+                outG.append(shape_postamble)
 
-    print(postamble)
+    outG.append(postamble)
 
+
+    return outG
