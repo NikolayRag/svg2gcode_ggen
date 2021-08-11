@@ -99,14 +99,18 @@ class GGen():
         d = _shape.d_path()
         m = _shape.transformation_matrix()
 
+        if not d:
+            return outGShape
 
-        if d:
-            outGShape.append(self.shapePreamble)
-            p = point_generator(d, m, self.smoothness)
-            for x,y in p:
-                if x > 0 and x < self.maxX and y > 0 and y < self.maxY:  
-                    outGShape.append( gcMove(_scale*x, _scale*y) )
-            outGShape.append(self.shapePostamble)
+
+        outGShape.append(self.shapePreamble)
+
+        p = point_generator(d, m, self.smoothness)
+        for x,y in p:
+            if x > 0 and x < self.maxX and y > 0 and y < self.maxY:  
+                outGShape.append( gcMove(_scale*x, _scale*y) )
+
+        outGShape.append(self.shapePostamble)
 
 
         return outGShape
