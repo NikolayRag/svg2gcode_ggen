@@ -1,6 +1,6 @@
 #!/usr/bin/env python  
-from bezmisc import *  
-from ffgeom import *  
+from .bezmisc import *  
+from .ffgeom import *  
   
 def maxdist(xyPoints):  
     ((p0x,p0y), (p1x,p1y), (p2x,p2y), (p3x,p3y)) = xyPoints

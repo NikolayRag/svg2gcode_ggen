@@ -3,11 +3,11 @@
 import logging
 import traceback
 import xml.etree.ElementTree as ET
-import simplepath
-import simpletransform 
-import cubicsuperpath
-import cspsubdiv
-from bezmisc import beziersplitatt
+from . import simplepath
+from . import simpletransform 
+from . import cubicsuperpath
+from . import cspsubdiv
+from .bezmisc import beziersplitatt
 
 
 class svgshape(object):

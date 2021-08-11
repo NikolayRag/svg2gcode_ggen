@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
 import sys
-import shapes as shapes_pkg
-from shapes import point_generator
+from . import shapes as shapes_pkg
+from .shapes import point_generator
 
 
 
