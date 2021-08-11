@@ -18,6 +18,8 @@ def generate_gcode(
     postamble = ''
 ):
     outG = []
+
+
     width = root.get('width')
     height = root.get('height')
     if width == None or height == None:
