@@ -6,11 +6,9 @@ import shapes as shapes_pkg
 from shapes import point_generator
 from config import *
 
-def generate_gcode():
+def generate_gcode(root):
     svg_shapes = set(['rect', 'circle', 'ellipse', 'line', 'polyline', 'polygon', 'path'])
     
-    tree = ET.parse(sys.stdin)
-    root = tree.getroot()
     
     width = root.get('width')
     height = root.get('height')
@@ -53,9 +51,4 @@ def generate_gcode():
                 print(shape_postamble)
 
     print(postamble)
-
-if __name__ == "__main__":
-    generate_gcode()
-
-
 
