@@ -72,13 +72,17 @@ class GGen():
             print("Unable to get width and height for the svg")
 
 
-        return self.gCode()
+        return (
+            [f'F{self.feedRate}']
+            + self.gCode()
+            + [self.gcMove(0,0)]
+        )
 
 
 
 
     def gCode(self):
-        outGCode = [f'F{self.feedRate}']
+        outGCode = []
 
         outGCode.append(self.preamble)
 
@@ -95,7 +99,6 @@ class GGen():
 
         outGCode.append(self.postamble)
 
-        outGCode.append( self.gcMove(0, 0) )
 
 
         return outGCode
