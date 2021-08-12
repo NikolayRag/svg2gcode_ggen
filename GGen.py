@@ -70,7 +70,7 @@ class GGen():
 
 
 
-    def generate(self):
+    def generate(self, _home=True):
         outGCode = [f'F{self.feedRate}']
 
         outGCode.append(self.preamble)
@@ -87,6 +87,9 @@ class GGen():
                 outGCode += gShape( shape_class(elem), self.scale )
 
         outGCode.append(self.postamble)
+
+        if _home:
+            outGCode.append( gcMove(0, 0) )
 
 
         return outGCode
