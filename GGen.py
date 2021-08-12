@@ -118,7 +118,7 @@ class GGen():
 
         if self.shapePreamble:
             outGShape.append(
-                self.shapePreamble(str(_shape))
+                self.shapePreamble(_shape.__str__())
                 if callable(self.shapePreamble)
                 else self.shapePreamble
             )
@@ -130,7 +130,7 @@ class GGen():
 
         if self.shapePostamble:
             outGShape.append(
-                self.shapePostamble(str(_shape))
+                self.shapePostamble(_shape.__str__())
                 if callable(self.shapePostamble)
                 else self.shapePostamble
             )
