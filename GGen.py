@@ -32,25 +32,25 @@ class GGen():
 
 
     def generate(self,
-        _smoothness = 0.02,
-        _feedRate = 10000,
-        _maxX = 200,
-        _maxY = 300,
+        smoothness = 0.02,
+        feedRate = 10000,
+        maxX = 200,
+        maxY = 300,
 
-        _preamble = 'G90',
-        _shapePreamble = None,
-        _shapePostamble = None,
-        _postamble = ''
+        preamble = 'G90',
+        shapePreamble = None,
+        shapePostamble = None,
+        postamble = ''
     ):
-        self.smoothness = _smoothness
-        self.feedRate = _feedRate
-        self.maxX = _maxX
-        self.maxY = _maxY
+        self.smoothness = smoothness
+        self.feedRate = feedRate
+        self.maxX = maxX
+        self.maxY = maxY
 
-        self.preamble = _preamble
-        self.shapePreamble = _shapePreamble
-        self.shapePostamble = _shapePostamble
-        self.postamble = _postamble
+        self.preamble = preamble
+        self.shapePreamble = shapePreamble
+        self.shapePostamble = shapePostamble
+        self.postamble = postamble
 
 
         width = self.rootET.get('width')
