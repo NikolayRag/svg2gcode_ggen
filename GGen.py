@@ -17,8 +17,8 @@ class GGen():
     maxY = 0
 
     preamble = ''
-    shapePreamble = ''
-    shapePostamble = ''
+    shapePreamble = None
+    shapePostamble = None
     postamble = ''
 
 
@@ -38,8 +38,8 @@ class GGen():
         _maxY = 300,
 
         _preamble = 'G90',
-        _shapePreamble = '',
-        _shapePostamble = '',
+        _shapePreamble = None,
+        _shapePostamble = None,
         _postamble = ''
     ):
         self.smoothness = _smoothness
@@ -116,14 +116,24 @@ class GGen():
             return outGShape
 
 
-        outGShape.append(self.shapePreamble)
+        if self.shapePreamble:
+            outGShape.append(
+                self.shapePreamble(str(_shape))
+                if callable(self.shapePreamble)
+                else self.shapePreamble
+            )
 
         p = point_generator(d, m, self.smoothness)
         for x,y in p:
             if x > 0 and x < self.maxX and y > 0 and y < self.maxY:  
-
-        outGShape.append(self.shapePostamble)
                 outGShape.append( self.gcMove(self.scale*x, self.scale*y) )
+
+        if self.shapePostamble:
+            outGShape.append(
+                self.shapePostamble(str(_shape))
+                if callable(self.shapePostamble)
+                else self.shapePostamble
+            )
 
 
         return outGShape
