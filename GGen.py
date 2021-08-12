@@ -79,6 +79,7 @@ class GGen():
             try:
                 _, tag_suffix = elem.tag.split('}')
             except ValueError:
+                print('Skip tag:', elem.tag)
                 continue
 
             if tag_suffix in self.svg_shapes:
