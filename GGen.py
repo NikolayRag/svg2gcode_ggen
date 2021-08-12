@@ -89,7 +89,7 @@ class GGen():
         outGCode.append(self.postamble)
 
         if _home:
-            outGCode.append( gcMove(0, 0) )
+            outGCode.append( self.gcMove(0, 0) )
 
 
         return outGCode
@@ -112,7 +112,7 @@ class GGen():
         p = point_generator(d, m, self.smoothness)
         for x,y in p:
             if x > 0 and x < self.maxX and y > 0 and y < self.maxY:  
-                outGShape.append( gcMove(_scale*x, _scale*y) )
+                outGShape.append( self.gcMove(_scale*x, _scale*y) )
 
         outGShape.append(self.shapePostamble)
 
@@ -121,5 +121,5 @@ class GGen():
 
 
 
-    def gcMove(_x, _y, _pre="G1"):
+    def gcMove(self, _x, _y, _pre="G1"):
             return f"{_pre} X{_x} Y{_y}"
