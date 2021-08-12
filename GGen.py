@@ -95,9 +95,9 @@ class GGen():
 
             if tag_suffix in self.svg_shapes:
                 shape_class = getattr(shapes_pkg, tag_suffix)
-                outGCode += self.gShape( shape_class(elem), self.scale )
 
         outGCode.append(self.postamble)
+                outGCode += self.gShape( shape_class(elem) )
 
 
 
@@ -105,7 +105,7 @@ class GGen():
 
 
 
-    def gShape(self, _shape, _scale=1):
+    def gShape(self, _shape):
         outGShape = []
 
 
@@ -121,9 +121,9 @@ class GGen():
         p = point_generator(d, m, self.smoothness)
         for x,y in p:
             if x > 0 and x < self.maxX and y > 0 and y < self.maxY:  
-                outGShape.append( self.gcMove(_scale*x, _scale*y) )
 
         outGShape.append(self.shapePostamble)
+                outGShape.append( self.gcMove(self.scale*x, self.scale*y) )
 
 
         return outGShape
