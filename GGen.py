@@ -116,24 +116,26 @@ class GGen():
             return outGShape
 
 
-        if self.shapePreamble:
-            outGShape.append(
-                self.shapePreamble(_shape.__str__())
-                if callable(self.shapePreamble)
-                else self.shapePreamble
-            )
+        cInject = self.shapePreamble
+        if cInject:
+            if callable(cInject):
+                cInject = cInject(_shape.__str__())
+
+            outGShape.append(cInject if isinstance(cInject, str) else '')
+
 
         p = point_generator(d, m, self.smoothness)
         for x,y in p:
             if x > 0 and x < self.maxX and y > 0 and y < self.maxY:  
                 outGShape.append( self.gcMove(self.scale*x, self.scale*y) )
 
-        if self.shapePostamble:
-            outGShape.append(
-                self.shapePostamble(_shape.__str__())
-                if callable(self.shapePostamble)
-                else self.shapePostamble
-            )
+
+        cInject = self.shapePostamble
+        if cInject:
+            if callable(cInject):
+                cInject = cInject(_shape.__str__())
+
+            outGShape.append(cInject if isinstance(cInject, str) else '')
 
 
         return outGShape
