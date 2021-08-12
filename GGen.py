@@ -84,7 +84,7 @@ class GGen():
 
             if tag_suffix in self.svg_shapes:
                 shape_class = getattr(shapes_pkg, tag_suffix)
-                outGCode += gShape( shape_class(elem), self.scale )
+                outGCode += self.gShape( shape_class(elem), self.scale )
 
         outGCode.append(self.postamble)
 
