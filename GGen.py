@@ -7,7 +7,7 @@ from .shapes import point_generator
 
 
 class GGen():
-    svg_shapes = set(['rect', 'circle', 'ellipse', 'line', 'polyline', 'polygon', 'path']),
+    svg_shapes = ('rect', 'circle', 'ellipse', 'line', 'polyline', 'polygon', 'path')
 
 
     rootET = None
