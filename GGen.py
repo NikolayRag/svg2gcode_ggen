@@ -26,8 +26,12 @@ class GGen():
 
 
 
-    def __init__(self,
-        _rootET,
+    def __init__(self, _rootET):
+        self.rootET = _rootET
+
+
+
+    def generate(self,
         _smoothness = 0.02,
         _feedRate = 10000,
         _maxX = 200,
@@ -38,7 +42,6 @@ class GGen():
         _shapePostamble = '',
         _postamble = ''
     ):
-        self.rootET = _rootET
         self.smoothness = _smoothness
         self.feedRate = _feedRate
         self.maxX = _maxX
@@ -69,12 +72,16 @@ class GGen():
             print("Unable to get width and height for the svg")
 
 
+        return self.gCode()
 
-    def generate(self, _home=True):
+
+
+
+    def gCode(self):
         outGCode = [f'F{self.feedRate}']
 
         outGCode.append(self.preamble)
-        
+
         for elem in self.rootET.iter():
             try:
                 _, tag_suffix = elem.tag.split('}')
@@ -88,8 +95,7 @@ class GGen():
 
         outGCode.append(self.postamble)
 
-        if _home:
-            outGCode.append( self.gcMove(0, 0) )
+        outGCode.append( self.gcMove(0, 0) )
 
 
         return outGCode
