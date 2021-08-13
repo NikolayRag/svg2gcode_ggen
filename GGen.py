@@ -37,7 +37,7 @@ class GGen():
         maxX = 200,
         maxY = 300,
 
-        preamble = 'G90',
+        preamble = '',
         shapePreamble = None,
         shapePostamble = None,
         postamble = ''
