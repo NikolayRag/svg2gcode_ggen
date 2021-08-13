@@ -72,19 +72,13 @@ class GGen():
             print("Unable to get width and height for the svg")
 
 
-        return (
-            [f'F{self.feedRate}']
-            + self.gCode()
-            + [self.gcMove(0,0)]
-        )
+        return self.head() +self.gCode() +self.tail()
 
 
 
 
     def gCode(self):
         outGCode = []
-
-        outGCode.append(self.preamble)
 
         for elem in self.rootET.iter():
             try:
@@ -98,8 +92,6 @@ class GGen():
 
                 outGCode += self.gShape( shape_class(elem) )
 
-
-        outGCode.append(self.postamble)
 
         return outGCode
 
@@ -141,3 +133,16 @@ class GGen():
 
     def gcMove(self, _x, _y, _pre="G1"):
             return f"{_pre} X{_x} Y{_y}"
+
+
+
+    def head(self):
+        return [f'F{self.feedRate}', self.preamble]
+
+
+
+    def tail(self):
+        return [self.postamble, self.gcMove(0,0)]
+
+
+
