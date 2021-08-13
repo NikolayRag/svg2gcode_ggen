@@ -31,7 +31,7 @@ class GGen():
 
 
 
-    def generate(self,
+    def set(self,
         smoothness = 0.02,
         feedRate = 10000,
         maxX = 200,
@@ -72,6 +72,8 @@ class GGen():
             print("Unable to get width and height for the svg")
 
 
+    
+    def build(self):
         return self.head() +self.gCode() +self.tail()
 
 
