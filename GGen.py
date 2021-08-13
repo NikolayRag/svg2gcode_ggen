@@ -33,7 +33,7 @@ class GGen():
 
     def set(self,
         smoothness = 0.02,
-        feedRate = 10000,
+        feedRate = 0,
         maxX = 200,
         maxY = 300,
 
@@ -145,7 +145,13 @@ class GGen():
 
 
     def head(self):
-        return [f'F{self.feedRate}', self.preamble]
+        out = []
+        if self.feedRate:
+            out.append( f'F{self.feedRate}' )
+
+        out.append( self.preamble )
+
+        return out
 
 
 
