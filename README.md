@@ -21,18 +21,20 @@ svg = XML.parse(_fileName)
 import GGen
 
 ggObject = GGen.GGen( svg.getroot() )
-ggRows = ggObject.generate(
+ggObject.set(
     smoothness = 0.02,
     feedRate = 10000,
     maxX = 200,
     maxY = 300,
 
-    preamble = 'G90',
+    preamble = '',
     shapePreamble = None,
     shapePostamble = None,
     postamble = ''
 )
-print ( "\n".join(ggRows) )
+ggString = ggObject.build(
+	join=True
+)
 ```
 
 In addition to being strings, **shapePreamble** and **shapePostamble** passed can be callback functions to generate inline pre/post-amble at runtime.
