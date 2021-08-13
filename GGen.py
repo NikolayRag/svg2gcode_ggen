@@ -106,14 +106,11 @@ class GGen():
 
 
     def gShape(self, _shape):
-        outGShape = []
-
-
         d = _shape.d_path()
         m = _shape.transformation_matrix()
 
         if not d:
-            return outGShape
+            return []
 
 
         injectPre = self.shapePreamble
@@ -121,8 +118,9 @@ class GGen():
             injectPre = injectPre(_shape.__str__())
         if not isinstance(injectPre, str):
             injectPre = ''
-        outGShape.append(injectPre)
 
+
+        outGShape = []
 
         p = point_generator(d, m, self.smoothness)
         for x,y in p:
@@ -132,13 +130,12 @@ class GGen():
 
         injectPost = self.shapePostamble
         if callable(injectPost):
-            injectPost = injectPost(_shape.__str__())
+            injectPost = injectPost(_shape.__str__(), outGShape)
         if not isinstance(injectPost, str):
             injectPost = ''
-        outGShape.append(injectPost)
 
 
-        return outGShape
+        return [injectPre] +outGShape +[injectPost]
 
 
 
