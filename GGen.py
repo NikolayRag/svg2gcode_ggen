@@ -116,12 +116,12 @@ class GGen():
             return outGShape
 
 
-        cInject = self.shapePreamble
-        if cInject:
-            if callable(cInject):
-                cInject = cInject(_shape.__str__())
-
-            outGShape.append(cInject if isinstance(cInject, str) else '')
+        injectPre = self.shapePreamble
+        if callable(injectPre):
+            injectPre = injectPre(_shape.__str__())
+        if not isinstance(injectPre, str):
+            injectPre = ''
+        outGShape.append(injectPre)
 
 
         p = point_generator(d, m, self.smoothness)
@@ -130,12 +130,12 @@ class GGen():
                 outGShape.append( self.gcMove(self.scale*x, self.scale*y) )
 
 
-        cInject = self.shapePostamble
-        if cInject:
-            if callable(cInject):
-                cInject = cInject(_shape.__str__())
-
-            outGShape.append(cInject if isinstance(cInject, str) else '')
+        injectPost = self.shapePostamble
+        if callable(injectPost):
+            injectPost = injectPost(_shape.__str__())
+        if not isinstance(injectPost, str):
+            injectPost = ''
+        outGShape.append(injectPost)
 
 
         return outGShape
