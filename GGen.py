@@ -73,8 +73,14 @@ class GGen():
 
 
     
-    def build(self):
-        return self.head() +self.gCode() +self.tail()
+    def build(self, join=True):
+        out = self.head() +self.gCode() +self.tail()
+
+        if join:
+            out = "\n".join(out)
+
+
+        return out
 
 
 
