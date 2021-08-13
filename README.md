@@ -1,5 +1,12 @@
-A svg to gcode compiler Py3 module.
+SVG to GCode converter
 Forked from [vishpat/svg2gcode](https://github.com/vishpat/svg2gcode)
+
+Most notable changes:
+* Python 3 compatable
+* Is importable module
+* Class GGen as interface
+
+Source provided is an SVG within xml.etree.ElementTree root Element, as used widely.
 
 Quick useage:
 
@@ -10,7 +17,7 @@ svg = XML.parse(_fileName)
 
 import GGen
 
-ggObject = GGen( svg.getroot() )
+ggObject = GGen.GGen( svg.getroot() )
 ggRows = ggObject.generate(
     smoothness = 0.02,
     feedRate = 10000,
