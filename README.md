@@ -1,14 +1,17 @@
 SVG to GCode converter
-Forked from [vishpat/svg2gcode](https://github.com/vishpat/svg2gcode)
+----------------------
+Forked from [vishpat/svg2gcode](https://github.com/vishpat/svg2gcode) without Inkscape branch.
+
 
 Most notable changes:
 * Python 3 compatable
 * Is importable module
-* Class GGen as interface
+* GGen class as interface
 
 Source provided is an SVG within xml.etree.ElementTree root Element, as used widely.
 
 Quick useage:
+------------
 
 ```python
 import xml.etree.ElementTree as XML
@@ -32,20 +35,22 @@ ggRows = ggObject.generate(
 print ( "\n".join(ggRows) )
 ```
 
-**shapePreamble** and **shapePostamble** passed can be callback functions,
-accepting currently iterated SVG ET **element**:
+In addition to being strings, **shapePreamble** and **shapePostamble** passed can be callback functions to generate inline pre/post-amble at runtime.
+**shapePreamble** accepts currently iterated SVG **element**, and **shapePostamble** accepts **element** and generated **gcode**:
 
 ```python
-def shapePre(_shape):
-	return( f"(preamble for {_shape.tag})" )
+def shapePre(_element):
+	return( f"(preamble for {_element.tag})" )
 
-ggRows = ggObject.generate( shapePreamble=shapePre )
+def shapePost(_element, _gcode):
+	return( f"(postamble for {_element.tag} with code {_gcode})" )
 
+ggRows = ggObject.generate( shapePreamble=shapePre, shapePostamble=shapePost )
 ```
 
 
 
-original project terms:
+Original project terms:
 -----------------------
 
-Compiler is based on the eggbot project and it basically converts all of the SVG shapes into bezier curves. The bezier curves are then recursively sub divided until desired smoothness is achieved. The sub curves are then approximated as lines which are then converted into g-code. 
+The compiler is based on the eggbot project and it basically converts all of the SVG shapes into bezier curves. The bezier curves are then recursively sub divided until desired smoothness is achieved. The sub curves are then approximated as lines which are then converted into g-code. 
