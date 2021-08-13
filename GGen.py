@@ -34,6 +34,7 @@ class GGen():
     def set(self,
         smoothness = 0.02,
         feedRate = 0,
+        park = False,
         maxX = 200,
         maxY = 300,
 
@@ -44,6 +45,7 @@ class GGen():
     ):
         self.smoothness = smoothness
         self.feedRate = feedRate
+        self.park = park
         self.maxX = maxX
         self.maxY = maxY
 
@@ -156,7 +158,14 @@ class GGen():
 
 
     def tail(self):
-        return [self.postamble, self.gcMove(0,0)]
+        out = []
+        out.append( self.postamble )
+
+        if self.park:
+            out.append( self.gcMove(0,0) )
+
+
+        return out
 
 
 
