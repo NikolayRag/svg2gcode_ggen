@@ -132,8 +132,7 @@ class GGen():
 
         p = point_generator(d, m, self.smoothness)
         for x,y in p:
-            if x > 0 and x < self.maxX and y > 0 and y < self.maxY:  
-                outGShape.append( (self.scale*x, self.scale*y) )
+            outGShape.append( (self.scale*x, self.scale*y) )
 
         if not len(outGShape):
             return []
