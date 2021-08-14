@@ -21,6 +21,7 @@ class GGen():
     shapePre = ''
     shapePost = ''
     postamble = ''
+    shapeIn = ''
 
 
     scale = 1.
@@ -41,6 +42,7 @@ class GGen():
 
         preamble = None,
         shapePre = None,
+        shapeIn = None,
         shapePost = None,
         postamble = None
     ):
@@ -52,6 +54,7 @@ class GGen():
 
         if preamble != None: self.preamble = preamble
         if shapePre != None: self.shapePre = shapePre
+        if shapeIn != None: self.shapeIn = shapeIn
         if shapePost != None: self.shapePost = shapePost
         if postamble != None: self.postamble = postamble
 
@@ -131,6 +134,13 @@ class GGen():
                 outGShape.append( (self.scale*x, self.scale*y) )
 
 
+        injectIn = self.shapeIn
+        if callable(injectIn):
+            injectIn = injectIn(_shape.__str__(), outGShape[0])
+        if not isinstance(injectIn, str):
+            injectIn = ''
+
+
         injectPost = self.shapePost
         if callable(injectPost):
             injectPost = injectPost(_shape.__str__(), outGShape)
@@ -139,7 +149,7 @@ class GGen():
 
         return (
             [injectPre]
-            + self.gcMove(outGShape)
+            + self.gcMove(outGShape[0])
             + [injectPost]
         )
 
