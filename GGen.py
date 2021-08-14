@@ -145,7 +145,7 @@ class GGen():
 
 
 
-    def shapeDecorate(self, _cEl, _shapes, outGShapeCode=[]):
+    def shapeDecorate(self, _cEl, _shapes, _outCode=[]):
         injectPre = self.buildInline(self.shapePre, _cEl)
         injectPost = self.buildInline(self.shapePost, _cEl, _shapes)
 
@@ -154,14 +154,14 @@ class GGen():
             if len(cShape):
                 injectIn = self.buildInline(self.shapeIn, _cEl, cShape[0])
 
-                outGShapeCode += [injectPre]
-                outGShapeCode += self.gMove(cShape[0])
-                outGShapeCode += [injectIn]
-                outGShapeCode += self.gMove(cShape[1:])
-                outGShapeCode += [injectPost]
+                _outCode += [injectPre]
+                _outCode += self.gMove(cShape[0])
+                _outCode += [injectIn]
+                _outCode += self.gMove(cShape[1:])
+                _outCode += [injectPost]
 
 
-        return outGShapeCode
+        return _outCode
 
 
 
