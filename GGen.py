@@ -19,9 +19,9 @@ class GGen():
 
     preamble = ''
     shapePre = ''
+    shapeIn = ''
     shapePost = ''
     postamble = ''
-    shapeIn = ''
 
 
     scale = 1.
