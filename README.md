@@ -23,7 +23,8 @@ import GGen
 ggObject = GGen.GGen( svg.getroot() )
 ggObject.set(
     smoothness = 0.02,
-    feedRate = 10000,
+    feedRate = 0,
+    park = False,
     maxX = 200,
     maxY = 300,
 
@@ -32,8 +33,8 @@ ggObject.set(
     shapePostamble = None,
     postamble = ''
 )
-ggString = ggObject.build(
-	join=True
+ggRows = ggObject.build(
+	join=False
 )
 ```
 
@@ -45,9 +46,11 @@ def shapePre(_element):
 	return( f"(preamble for {_element.tag})" )
 
 def shapePost(_element, _gcode):
-	return( f"(postamble for {_element.tag} with code {_gcode})" )
+	return( f"(postamble for {_element.tag}, {len(_gcode)} segments)" )
 
-ggRows = ggObject.generate( shapePreamble=shapePre, shapePostamble=shapePost )
+
+ggObject.set( shapePreamble=shapePre, shapePostamble=shapePost )
+ggStrings = ggObject.build(True)
 ```
 
 
