@@ -18,8 +18,8 @@ class GGen():
     maxY = 300
 
     preamble = ''
-    shapePreamble = None
-    shapePostamble = None
+    shapePre = ''
+    shapePost = ''
     postamble = ''
 
 
@@ -40,8 +40,8 @@ class GGen():
         maxY = None,
 
         preamble = None,
-        shapePreamble = None,
-        shapePostamble = None,
+        shapePre = None,
+        shapePost = None,
         postamble = None
     ):
         if smoothness != None: self.smoothness = smoothness
@@ -51,8 +51,8 @@ class GGen():
         if maxY != None: self.maxY = maxY
 
         if preamble != None: self.preamble = preamble
-        if shapePreamble != None: self.shapePreamble = shapePreamble
-        if shapePostamble != None: self.shapePostamble = shapePostamble
+        if shapePre != None: self.shapePre = shapePre
+        if shapePost != None: self.shapePost = shapePost
         if postamble != None: self.postamble = postamble
 
 
@@ -116,7 +116,7 @@ class GGen():
             return []
 
 
-        injectPre = self.shapePreamble
+        injectPre = self.shapePre
         if callable(injectPre):
             injectPre = injectPre(_shape.__str__())
         if not isinstance(injectPre, str):
@@ -131,7 +131,7 @@ class GGen():
                 outGShape.append( self.gcMove(self.scale*x, self.scale*y) )
 
 
-        injectPost = self.shapePostamble
+        injectPost = self.shapePost
         if callable(injectPost):
             injectPost = injectPost(_shape.__str__(), outGShape)
         if not isinstance(injectPost, str):
