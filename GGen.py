@@ -137,26 +137,10 @@ class GGen():
         if not len(outGShape):
             return []
 
-
-        injectPre = self.shapePre
-        if callable(injectPre):
-            injectPre = injectPre(_shape.__str__())
-        if not isinstance(injectPre, str):
-            injectPre = ''
-
-
-        injectIn = self.shapeIn
-        if callable(injectIn):
-            injectIn = injectIn(_shape.__str__(), outGShape[0])
-        if not isinstance(injectIn, str):
-            injectIn = ''
-
-
-        injectPost = self.shapePost
-        if callable(injectPost):
-            injectPost = injectPost(_shape.__str__(), outGShape)
-        if not isinstance(injectPost, str):
-            injectPost = ''
+        cEl = _shape.__str__()
+        injectPre = self.buildInline(self.shapePre, cEl)
+        injectIn = self.buildInline(self.shapeIn, cEl, outGShape[0])
+        injectPost = self.buildInline(self.shapePost, cEl, outGShape)
 
         return (
             [injectPre]
@@ -165,6 +149,20 @@ class GGen():
             + self.gMove(outGShape[1:])
             + [injectPost]
         )
+
+
+
+    def buildInline(self, _tmpl, _el, _arg=None):
+        if callable(_tmpl):
+            if arg:
+                _tmpl = _tmpl(_el, _arg)
+            else:
+                _tmpl = _tmpl(_el)
+
+        if not isinstance(_tmpl, str):
+            _tmpl = ''
+
+        return _tmpl
 
 
 
