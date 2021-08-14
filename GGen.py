@@ -112,8 +112,9 @@ class GGen():
 
             if tag_suffix in self.svg_shapes:
                 shape_class = getattr(shapes_pkg, tag_suffix)
+                shapesA = self.gShape(shape_class(elem))
 
-                outGCode += self.gShape( shape_class(elem) )
+                self.shapeDecorate(elem, shapesA, outGCode)
 
 
         return outGCode
@@ -140,17 +141,18 @@ class GGen():
             cGShape.append( (self.scale*x, self.scale*y) )
 
 
-        cEl = _shape.__str__()
-
-        injectPre = self.buildInline(self.shapePre, cEl)
-        injectPost = self.buildInline(self.shapePost, cEl, gShapesA)
+        return gShapesA
 
 
-        outGShapeCode = []
 
-        for cShape in gShapesA:
+    def shapeDecorate(self, _cEl, _shapes, outGShapeCode=[]):
+        injectPre = self.buildInline(self.shapePre, _cEl)
+        injectPost = self.buildInline(self.shapePost, _cEl, _shapes)
+
+
+        for cShape in _shapes:
             if len(cShape):
-                injectIn = self.buildInline(self.shapeIn, cEl, cShape[0])
+                injectIn = self.buildInline(self.shapeIn, _cEl, cShape[0])
 
                 outGShapeCode += [injectPre]
                 outGShapeCode += self.gMove(cShape[0])
