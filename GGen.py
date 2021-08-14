@@ -139,14 +139,17 @@ class GGen():
 
         return (
             [injectPre]
-            + [self.gcMove(p) for p in outGShape]
+            + self.gcMove(outGShape)
             + [injectPost]
         )
 
 
 
-    def gcMove(self, _xy, _pre="G0"):
-            return f"X{_xy[0]}Y{_xy[1]}"
+    def gcMove(self, _coords):
+        if not isinstance(_coords[0], tuple):
+            _coords = (_coords,)
+
+        return [f"X{_xy[0]}Y{_xy[1]}" for _xy in _coords]
 
 
 
