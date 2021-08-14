@@ -10,17 +10,17 @@ Most notable changes:
 
 Source provided is an SVG within xml.etree.ElementTree root Element, as used widely.
 
-Quick useage:
-------------
+Quick useage, also showing defaults:
+------------------------------------
 
 ```python
 import xml.etree.ElementTree as XML
-svg = XML.parse(_fileName)
+svgRoot = XML.parse('file.svg').getroot()
 
 
 import GGen
 
-ggObject = GGen.GGen( svg.getroot() )
+ggObject = GGen.GGen( svgRoot )
 ggObject.set(
     smoothness = 0.02,
     feedRate = 0,
@@ -28,31 +28,52 @@ ggObject.set(
     maxX = 200,
     maxY = 300,
 
+    precision = 4,
     preamble = '',
-    shapePreamble = None,
-    shapePostamble = None,
+    shapePre = '',
+    shapeIn = '',
+    shapePost = '',
     postamble = ''
 )
 ggRows = ggObject.build(
-	join=False
+	join = False
 )
 ```
 
-In addition to being strings, **shapePreamble** and **shapePostamble** passed can be callback functions to generate inline pre/post-amble at runtime.
-**shapePreamble** accepts currently iterated SVG **element**, and **shapePostamble** accepts **element** and generated **gcode**:
+In addition to being strings, **shapePre**, **shapeIn** and **shapePost** passed can be hook functions to generate inline: before segment 1, after segment 1 and after last segment respectively.
+Arguments provided are:
+* **shapePre(currentSvgElement)**
+* **shapeIn(currentSvgElement, pointZero)**
+* **shapePost(currentSvgEelement, pointsList)**
 
 ```python
-def shapePre(_element):
+def shapePreHook(_element):
 	return( f"(preamble for {_element.tag})" )
 
-def shapePost(_element, _gcode):
-	return( f"(postamble for {_element.tag}, {len(_gcode)} segments)" )
+def shapeInHook(_element, _point0):
+    return( f"(postamble for {_element.tag}, starting at {_point0})" )
+
+def shapePostHook(_element, _points):
+	return( f"(postamble for {_element.tag}, {len(_points)} points)" )
 
 
-ggObject.set( shapePreamble=shapePre, shapePostamble=shapePost )
-ggStrings = ggObject.build(True)
+ggObject.set(
+    shapePre = shapePreHook,
+    shapeIn = shapeInHook,
+    shapePost = shapePostHook
+)
 ```
 
+Typical static config for laser engraver can be:
+```python
+ggObject.set(
+    preamble = 'G90 M4 S0',
+    shapePre = 'G0',
+    shapeIn = 'S100 G1',
+    shapePost = 'S0',
+    postamble = 'M5 G0 X0Y0'
+)
+```
 
 
 Original project terms:
