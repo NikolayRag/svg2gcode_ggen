@@ -1,12 +1,6 @@
 SVG to GCode converter
 ----------------------
-Forked from [vishpat/svg2gcode](https://github.com/vishpat/svg2gcode) without Inkscape branch.
 
-
-Most notable changes:
-* Python 3 compatable
-* Is importable module
-* GGen class as interface
 
 Source provided is an SVG within xml.etree.ElementTree root Element, as used widely.
 
@@ -76,7 +70,20 @@ ggObject.set(
 ```
 
 
+
+Original project:
+-----------------
+
+Forked from [vishpat/svg2gcode](https://github.com/vishpat/svg2gcode) without Inkscape branch.
+
+Most notable changes:
+* Python 3 compatable
+* Is importable module
+* GGen class as interface
+* Fix: curved shapes collected with wrong points
+* Fix: multishapes pre/in/post -decorated separately
+
+
 Original project terms:
------------------------
 
 The compiler is based on the eggbot project and it basically converts all of the SVG shapes into bezier curves. The bezier curves are then recursively sub divided until desired smoothness is achieved. The sub curves are then approximated as lines which are then converted into g-code. 
