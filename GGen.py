@@ -128,7 +128,7 @@ class GGen():
         p = point_generator(d, m, self.smoothness)
         for x,y in p:
             if x > 0 and x < self.maxX and y > 0 and y < self.maxY:  
-                outGShape.append( self.gcMove(self.scale*x, self.scale*y) )
+                outGShape.append( (self.scale*x, self.scale*y) )
 
 
         injectPost = self.shapePost
@@ -137,13 +137,16 @@ class GGen():
         if not isinstance(injectPost, str):
             injectPost = ''
 
+        return (
+            [injectPre]
+            + [self.gcMove(p) for p in outGShape]
+            + [injectPost]
+        )
 
-        return [injectPre] +outGShape +[injectPost]
 
 
-
-    def gcMove(self, _x, _y, _pre="G0"):
-            return f"{_pre} X{_x} Y{_y}"
+    def gcMove(self, _xy, _pre="G0"):
+            return f"X{_xy[0]}Y{_xy[1]}"
 
 
 
@@ -163,7 +166,7 @@ class GGen():
         out.append( self.postamble )
 
         if self.park:
-            out.append( self.gcMove(0,0) )
+            out.append( self.gcMove((0,0)) )
 
 
         return out
