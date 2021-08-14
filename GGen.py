@@ -142,7 +142,7 @@ class GGen():
 
 
 
-    def gcMove(self, _x, _y, _pre="G1"):
+    def gcMove(self, _x, _y, _pre="G0"):
             return f"{_pre} X{_x} Y{_y}"
 
 
