@@ -167,7 +167,7 @@ class GGen():
 
     def buildInline(self, _tmpl, _el, _arg=None):
         if callable(_tmpl):
-            if arg:
+            if _arg:
                 _tmpl = _tmpl(_el, _arg)
             else:
                 _tmpl = _tmpl(_el)
