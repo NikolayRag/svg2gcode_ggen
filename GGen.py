@@ -21,7 +21,8 @@ class GGen():
     preamble = ''
     shapePre = ''
     shapeIn = ''
-    shapePost = ''
+    shapeOut = ''
+    shapeFinal = ''
     postamble = ''
 
 
@@ -45,7 +46,8 @@ class GGen():
         preamble = None,
         shapePre = None,
         shapeIn = None,
-        shapePost = None,
+        shapeOut = None,
+        shapeFinal = None,
         postamble = None
     ):
         if smoothness != None: self.smoothness = smoothness
@@ -58,7 +60,8 @@ class GGen():
         if preamble != None: self.preamble = preamble
         if shapePre != None: self.shapePre = shapePre
         if shapeIn != None: self.shapeIn = shapeIn
-        if shapePost != None: self.shapePost = shapePost
+        if shapeOut != None: self.shapeOut = shapeOut
+        if shapeFinal != None: self.shapeFinal = shapeFinal
         if postamble != None: self.postamble = postamble
 
 
@@ -147,18 +150,21 @@ class GGen():
 
     def shapeDecorate(self, _cEl, _shapes, _outCode=[]):
         injectPre = self.buildInline(self.shapePre, _cEl)
-        injectPost = self.buildInline(self.shapePost, _cEl, _shapes)
+        injectFinal = self.buildInline(self.shapeFinal, _cEl, _shapes)
 
 
         for cShape in _shapes:
             if len(cShape):
                 injectIn = self.buildInline(self.shapeIn, _cEl, cShape[0])
+                injectOut = self.buildInline(self.shapeOut, _cEl, cShape)
 
                 _outCode += [injectPre]
                 _outCode += self.gMove(cShape[0])
                 _outCode += [injectIn]
                 _outCode += self.gMove(cShape[1:])
-                _outCode += [injectPost]
+                _outCode += [injectOut]
+
+        _outCode += [injectFinal]
 
 
         return _outCode
