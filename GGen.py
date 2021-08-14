@@ -75,7 +75,7 @@ class GGen():
 
 
     
-    def build(self, join=True):
+    def build(self, join=False):
         out = self.head() +self.gCode() +self.tail()
 
         if join:
