@@ -150,6 +150,8 @@ class GGen():
         return (
             [injectPre]
             + self.gcMove(outGShape[0])
+            + [injectIn]
+            + self.gcMove(outGShape[1:])
             + [injectPost]
         )
 
