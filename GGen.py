@@ -83,7 +83,13 @@ class GGen():
 
     
     def build(self, join=False):
-        out = self.head() +self.gCode() +self.tail()
+        out = (
+            self.gHead()
+            + [self.preamble]
+            + self.gCode()
+            + [self.postamble]
+            + self.gTail()
+        )
 
         if join:
             out = "\n".join(out)
@@ -169,20 +175,17 @@ class GGen():
 
 
 
-    def head(self):
+    def gHead(self):
         out = []
         if self.feedRate:
             out.append( f'F{self.feedRate}' )
-
-        out.append( self.preamble )
 
         return out
 
 
 
-    def tail(self):
+    def gTail(self):
         out = []
-        out.append( self.postamble )
 
         if self.park:
             out.append( self.gcMove((0,0)) )
