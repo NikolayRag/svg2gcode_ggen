@@ -42,19 +42,19 @@ ggRows = ggObject.build(
 
 In addition to being strings, **shapePre**, **shapeIn** and **shapePost** passed can be hook functions to generate inline: before segment 1, after segment 1 and after last segment respectively.
 Arguments provided are:
-* **shapePre(currentSvgElement)**
-* **shapeIn(currentSvgElement, pointZero)**
-* **shapePost(currentSvgEelement, pointsList)**
+* **shapePre(currentSvgElement)**, called once
+* **shapeIn(currentSvgElement, pointZero)**, called for each shape being separate
+* **shapePost(currentSvgEelement, [pointsList, ...])**, called once
 
 ```python
 def shapePreHook(_element):
-	return( f"(preamble for {_element.tag})" )
+	return( f"(pre for {_element.tag})" )
 
-def shapeInHook(_element, _point0):
-    return( f"(postamble for {_element.tag}, starting at {_point0})" )
+def shapeInHook(_element, _point):
+    return( f"(in for {_element.tag}, starting at {_point})" )
 
-def shapePostHook(_element, _points):
-	return( f"(postamble for {_element.tag}, {len(_points)} points)" )
+def shapePostHook(_element, _shapes):
+	return( f"(post for {_element.tag}, {len(_shapes)} shapes)" )
 
 
 ggObject.set(
