@@ -11,14 +11,15 @@ class GGen():
 
 
     rootET = None
-    smoothness = 1
-    feedRate = 0
-    maxX = 0
-    maxY = 0
+    smoothness = 0.02,
+    feedRate = 0,
+    park = False,
+    maxX = 200,
+    maxY = 300,
 
-    preamble = ''
-    shapePreamble = None
-    shapePostamble = None
+    preamble = '',
+    shapePreamble = None,
+    shapePostamble = None,
     postamble = ''
 
 
@@ -32,27 +33,27 @@ class GGen():
 
 
     def set(self,
-        smoothness = 0.02,
-        feedRate = 0,
-        park = False,
-        maxX = 200,
-        maxY = 300,
+        smoothness = None,
+        feedRate = None,
+        park = None,
+        maxX = None,
+        maxY = None,
 
-        preamble = '',
+        preamble = None,
         shapePreamble = None,
         shapePostamble = None,
-        postamble = ''
+        postamble = None
     ):
-        self.smoothness = smoothness
-        self.feedRate = feedRate
-        self.park = park
-        self.maxX = maxX
-        self.maxY = maxY
+        if smoothness != None: self.smoothness = smoothness
+        if feedRate != None: self.feedRate = feedRate
+        if park != None: self.park = park
+        if maxX != None: self.maxX = maxX
+        if maxY != None: self.maxY = maxY
 
-        self.preamble = preamble
-        self.shapePreamble = shapePreamble
-        self.shapePostamble = shapePostamble
-        self.postamble = postamble
+        if preamble != None: self.preamble = preamble
+        if shapePreamble != None: self.shapePreamble = shapePreamble
+        if shapePostamble != None: self.shapePostamble = shapePostamble
+        if postamble != None: self.postamble = postamble
 
 
         width = self.rootET.get('width')
