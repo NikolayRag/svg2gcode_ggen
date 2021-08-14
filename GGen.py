@@ -75,7 +75,7 @@ class GGen():
 
             scale_x = self.maxX / max(width, height)
             scale_y = self.maxY / max(width, height)
-            self.scale = min(scale_x, scale_y)
+#            self.scale = min(scale_x, scale_y)
 
         else:
             print("Unable to get width and height for the svg")
