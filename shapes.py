@@ -176,5 +176,7 @@ def point_generator(path, mat, flatness):
 
         for sp in p:
                 cspsubdiv.subdiv( sp, flatness)
+                start = True
                 for csp in sp:
-                    yield csp[1][0], csp[1][1]
+                    yield csp[1][0], csp[1][1], start
+                    start = False

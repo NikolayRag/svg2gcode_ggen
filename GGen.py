@@ -128,27 +128,38 @@ class GGen():
             return []
 
 
-        outGShape = []
+        gShapesA = []
 
+        cGShape = []
         p = point_generator(d, m, self.smoothness)
-        for x,y in p:
-            outGShape.append( (self.scale*x, self.scale*y) )
+        for x,y,start in p:
+            if start:
+                cGShape = []
+                gShapesA.append(cGShape)
 
-        if not len(outGShape):
-            return []
+            cGShape.append( (self.scale*x, self.scale*y) )
+
 
         cEl = _shape.__str__()
-        injectPre = self.buildInline(self.shapePre, cEl)
-        injectIn = self.buildInline(self.shapeIn, cEl, outGShape[0])
-        injectPost = self.buildInline(self.shapePost, cEl, outGShape)
 
-        return (
-            [injectPre]
-            + self.gMove(outGShape[0])
-            + [injectIn]
-            + self.gMove(outGShape[1:])
-            + [injectPost]
-        )
+        injectPre = self.buildInline(self.shapePre, cEl)
+        injectPost = self.buildInline(self.shapePost, cEl, gShapesA)
+
+
+        outGShapeCode = []
+
+        for cShape in gShapesA:
+            if len(cShape):
+                injectIn = self.buildInline(self.shapeIn, cEl, cShape[0])
+
+                outGShapeCode += [injectPre]
+                outGShapeCode += self.gMove(cShape[0])
+                outGShapeCode += [injectIn]
+                outGShapeCode += self.gMove(cShape[1:])
+                outGShapeCode += [injectPost]
+
+
+        return outGShapeCode
 
 
 
