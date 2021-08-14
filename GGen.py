@@ -11,15 +11,15 @@ class GGen():
 
 
     rootET = None
-    smoothness = 0.02,
-    feedRate = 0,
-    park = False,
-    maxX = 200,
-    maxY = 300,
+    smoothness = 0.02
+    feedRate = 0
+    park = False
+    maxX = 200
+    maxY = 300
 
-    preamble = '',
-    shapePreamble = None,
-    shapePostamble = None,
+    preamble = ''
+    shapePreamble = None
+    shapePostamble = None
     postamble = ''
 
 
