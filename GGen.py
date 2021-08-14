@@ -158,15 +158,15 @@ class GGen():
 
         return (
             [injectPre]
-            + self.gcMove(outGShape[0])
+            + self.gMove(outGShape[0])
             + [injectIn]
-            + self.gcMove(outGShape[1:])
+            + self.gMove(outGShape[1:])
             + [injectPost]
         )
 
 
 
-    def gcMove(self, _coords):
+    def gMove(self, _coords):
         if not isinstance(_coords[0], tuple):
             _coords = (_coords,)
 
@@ -188,7 +188,7 @@ class GGen():
         out = []
 
         if self.park:
-            out.append( self.gcMove((0,0)) )
+            out.append( self.gMove((0,0)) )
 
 
         return out
