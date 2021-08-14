@@ -17,6 +17,7 @@ class GGen():
     maxX = 200
     maxY = 300
 
+    precision = 4
     preamble = ''
     shapePre = ''
     shapeIn = ''
@@ -40,6 +41,7 @@ class GGen():
         maxX = None,
         maxY = None,
 
+        precision = None,
         preamble = None,
         shapePre = None,
         shapeIn = None,
@@ -52,6 +54,7 @@ class GGen():
         if maxX != None: self.maxX = maxX
         if maxY != None: self.maxY = maxY
 
+        if precision != None: self.precision = precision
         if preamble != None: self.preamble = preamble
         if shapePre != None: self.shapePre = shapePre
         if shapeIn != None: self.shapeIn = shapeIn
@@ -161,7 +164,8 @@ class GGen():
         if not isinstance(_coords[0], tuple):
             _coords = (_coords,)
 
-        return [f"X{_xy[0]}Y{_xy[1]}" for _xy in _coords]
+        p = self.precision
+        return [f"X{_xy[0]:.{p}f}Y{_xy[1]:.{p}f}" for _xy in _coords]
 
 
 
