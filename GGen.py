@@ -112,7 +112,7 @@ class GGen():
 
             if tag_suffix in self.svg_shapes:
                 shape_class = getattr(shapes_pkg, tag_suffix)
-                shapesA = self.gShape(shape_class(elem))
+                shapesA = self.genShape(shape_class(elem))
 
                 self.shapeDecorate(elem, shapesA, outGCode)
 
@@ -121,7 +121,7 @@ class GGen():
 
 
 
-    def gShape(self, _shape):
+    def genShape(self, _shape):
         d = _shape.d_path()
         m = _shape.transformation_matrix()
 
