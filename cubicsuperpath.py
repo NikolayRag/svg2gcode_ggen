@@ -160,7 +160,8 @@ def unCubicSuperPath(csp):
     return a
 
 def parsePath(d):
-    return CubicSuperPath(simplepath.parsePath(d))
+    sp = simplepath.parsePath(d)
+    return CubicSuperPath(sp) if len(sp) else []
 
 def formatPath(p):
     return simplepath.formatPath(unCubicSuperPath(p))

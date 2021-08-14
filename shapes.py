@@ -167,15 +167,10 @@ class polyline(polycommon):
         return d
 
 def point_generator(path, mat, flatness):
-        simple_path = simplepath.parsePath(path)
-        if len(simple_path) == 0:
-                return
-       
-        startX,startY = float(simple_path[0][1][0]), float(simple_path[0][1][1])
-        yield startX, startY
-
         p = cubicsuperpath.parsePath(path)
-        
+        if not len(p):
+                return
+
         if mat:
             simpletransform.applyTransformToPath(mat, p)
 
