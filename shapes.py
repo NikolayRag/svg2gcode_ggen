@@ -167,11 +167,10 @@ class polyline(polycommon):
         return d
 
 def point_generator(path, mat, flatness):
-
-        if len(simplepath.parsePath(path)) == 0:
+        simple_path = simplepath.parsePath(path)
+        if len(simple_path) == 0:
                 return
        
-        simple_path = simplepath.parsePath(path)
         startX,startY = float(simple_path[0][1][0]), float(simple_path[0][1][1])
         yield startX, startY
 
