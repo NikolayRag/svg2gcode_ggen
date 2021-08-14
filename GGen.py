@@ -124,8 +124,16 @@ class GGen():
         d = _shape.d_path()
         m = _shape.transformation_matrix()
 
+        outGShape = []
+
         if not d:
-            return []
+            return outGShape
+
+
+        p = point_generator(d, m, self.smoothness)
+        for x,y in p:
+            if x > 0 and x < self.maxX and y > 0 and y < self.maxY:  
+                outGShape.append( (self.scale*x, self.scale*y) )
 
 
         injectPre = self.shapePre
@@ -133,14 +141,6 @@ class GGen():
             injectPre = injectPre(_shape.__str__())
         if not isinstance(injectPre, str):
             injectPre = ''
-
-
-        outGShape = []
-
-        p = point_generator(d, m, self.smoothness)
-        for x,y in p:
-            if x > 0 and x < self.maxX and y > 0 and y < self.maxY:  
-                outGShape.append( (self.scale*x, self.scale*y) )
 
 
         injectIn = self.shapeIn
