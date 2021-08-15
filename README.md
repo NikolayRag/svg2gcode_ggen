@@ -37,10 +37,14 @@ ggRows = ggObject.build(
 
 In addition to being strings, **shapePre**, **shapeIn**, **shapeOut** and **shapeFinal** passed can be hook functions to generate inline:
 
-* **shapePre(currentSvgElement)** called once, inlined before segment 1 of each sub-shape
-* **shapeIn(currentSvgElement, pointZero)** called for each sub-shape, inlined after segment 1
-* **shapeOut(currentSvgElement, points)** called for each sub-shape and inlined after last segment
-* **shapeFinal(currentSvgEelement, shapes)** called once, inlined once at end of all sub-shapes
+* **shapePre(currentSvgElement)**
+    called once, inlined before segment 1 of each sub-shape
+* **shapeIn(currentSvgElement, pointZero)**
+    called for each sub-shape, inlined after segment 1
+* **shapeOut(currentSvgElement, points)**
+    called for each sub-shape and inlined after last segment
+* **shapeFinal(currentSvgEelement, shapes)**
+    called once, inlined once at end of all sub-shapes
 
 
 ```python
