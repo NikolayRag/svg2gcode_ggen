@@ -87,11 +87,11 @@ class GGen():
     
     def build(self, join=False):
         out = (
-            self.gHead()
+            self.buildHead()
             + [self.preamble]
             + self.gCode()
             + [self.postamble]
-            + self.gTail()
+            + self.buildTail()
         )
 
         if join:
@@ -115,7 +115,7 @@ class GGen():
 
             if tag_suffix in self.svg_shapes:
                 shape_class = getattr(shapes_pkg, tag_suffix)
-                shapesA = self.genShape(shape_class(elem))
+                shapesA = self.shapeGen(shape_class(elem))
 
                 self.shapeDecorate(elem, shapesA, outGCode)
 
@@ -124,7 +124,7 @@ class GGen():
 
 
 
-    def genShape(self, _shape):
+    def shapeGen(self, _shape):
         d = _shape.d_path()
         m = _shape.transformation_matrix()
 
@@ -159,9 +159,9 @@ class GGen():
                 injectOut = self.buildInline(self.shapeOut, _cEl, cShape)
 
                 if injectPre: _outCode += [injectPre]
-                _outCode += self.gMove(cShape[0])
+                _outCode += self.buildMove(cShape[0])
                 if injectIn: _outCode += [injectIn]
-                _outCode += self.gMove(cShape[1:])
+                _outCode += self.buildMove(cShape[1:])
                 if injectOut: _outCode += [injectOut]
 
         if injectFinal: _outCode += [injectFinal]
@@ -185,7 +185,7 @@ class GGen():
 
 
 
-    def gMove(self, _coords):
+    def buildMove(self, _coords):
         if not isinstance(_coords[0], tuple):
             _coords = (_coords,)
 
@@ -194,7 +194,7 @@ class GGen():
 
 
 
-    def gHead(self):
+    def buildHead(self):
         out = []
         if self.feedRate:
             out.append( f'F{self.feedRate}' )
@@ -203,11 +203,11 @@ class GGen():
 
 
 
-    def gTail(self):
+    def buildTail(self):
         out = []
 
         if self.park:
-            out.append( self.gMove((0,0)) )
+            out.append( self.buildMove((0,0)) )
 
 
         return out
