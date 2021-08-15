@@ -158,13 +158,13 @@ class GGen():
                 injectIn = self.buildInline(self.shapeIn, _cEl, cShape[0])
                 injectOut = self.buildInline(self.shapeOut, _cEl, cShape)
 
-                _outCode += [injectPre]
+                if injectPre: _outCode += [injectPre]
                 _outCode += self.gMove(cShape[0])
-                _outCode += [injectIn]
+                if injectIn: _outCode += [injectIn]
                 _outCode += self.gMove(cShape[1:])
-                _outCode += [injectOut]
+                if injectOut: _outCode += [injectOut]
 
-        _outCode += [injectFinal]
+        if injectFinal: _outCode += [injectFinal]
 
 
         return _outCode
