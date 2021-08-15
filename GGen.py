@@ -190,7 +190,7 @@ class GGen():
             _coords = (_coords,)
 
         p = self.precision
-        return [f"X{_xy[0]:.{p}f}Y{_xy[1]:.{p}f}" for _xy in _coords]
+        return [f"X{round(_x,p)}Y{round(_y,p)}" for _x,_y in _coords]
 
 
 
