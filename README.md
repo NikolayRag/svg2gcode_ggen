@@ -26,7 +26,8 @@ ggObject.set(
     preamble = '',
     shapePre = '',
     shapeIn = '',
-    shapePost = '',
+    shapeOut = '',
+    shapeFinal = '',
     postamble = ''
 )
 ggRows = ggObject.build(
@@ -34,11 +35,13 @@ ggRows = ggObject.build(
 )
 ```
 
-In addition to being strings, **shapePre**, **shapeIn** and **shapePost** passed can be hook functions to generate inline: before segment 1, after segment 1 and after last segment respectively.
-Arguments provided are:
-* **shapePre(currentSvgElement)**, called once
-* **shapeIn(currentSvgElement, pointZero)**, called for each shape being separate
-* **shapePost(currentSvgEelement, [pointsList, ...])**, called once
+In addition to being strings, **shapePre**, **shapeIn**, **shapeOut** and **shapeFinal** passed can be hook functions to generate inline:
+
+* **shapePre(currentSvgElement)** called once, inlined before segment 1 of each sub-shape
+* **shapeIn(currentSvgElement, pointZero)** called for each sub-shape, inlined after segment 1
+* **shapeOut(currentSvgElement, points)** called for each sub-shape and inlined after last segment
+* **shapeFinal(currentSvgEelement, shapes)** called once, inlined once at end of all sub-shapes
+
 
 ```python
 def shapePreHook(_element):
@@ -47,14 +50,18 @@ def shapePreHook(_element):
 def shapeInHook(_element, _point):
     return( f"(in for {_element.tag}, starting at {_point})" )
 
-def shapePostHook(_element, _shapes):
+def shapeOutHook(_element, _shape):
+    return( f"(post for {_element.tag}, {len(_shape)} points)" )
+
+def shapeFinalHook(_element, _shapes):
 	return( f"(post for {_element.tag}, {len(_shapes)} shapes)" )
 
 
 ggObject.set(
     shapePre = shapePreHook,
     shapeIn = shapeInHook,
-    shapePost = shapePostHook
+    shapeOut = shapeOutHook,
+    shapeFinal = shapeFinalHook
 )
 ```
 
@@ -64,7 +71,7 @@ ggObject.set(
     preamble = 'G90 M4 S0',
     shapePre = 'G0',
     shapeIn = 'S100 G1',
-    shapePost = 'S0',
+    shapeOut = 'S0',
     postamble = 'M5 G0 X0Y0'
 )
 ```
