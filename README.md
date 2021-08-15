@@ -30,7 +30,7 @@ ggObject.set(
     shapeFinal = '',
     postamble = ''
 )
-ggRows = ggObject.build(
+ggRows = ggObject.generate(
 	join = False
 )
 ```
