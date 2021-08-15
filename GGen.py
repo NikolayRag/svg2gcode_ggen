@@ -86,25 +86,8 @@ class GGen():
 
     
     def build(self, join=False):
-        out = (
-            self.buildHead()
-            + [self.preamble]
-            + self.gCode()
-            + [self.postamble]
-            + self.buildTail()
-        )
+        outGCode = self.buildHead()
 
-        if join:
-            out = "\n".join(out)
-
-
-        return out
-
-
-
-
-    def gCode(self):
-        outGCode = []
 
         for elem in self.rootET.iter():
             try:
@@ -120,7 +103,10 @@ class GGen():
                 self.shapeDecorate(elem, shapesA, outGCode)
 
 
-        return outGCode
+        outGCode += self.buildTail()
+
+
+        return "\n".join(outGCode) if join else outGCode
 
 
 
@@ -196,6 +182,9 @@ class GGen():
 
     def buildHead(self):
         out = []
+
+        out.append(self.preamble)
+
         if self.feedRate:
             out.append( f'F{self.feedRate}' )
 
@@ -209,6 +198,7 @@ class GGen():
         if self.park:
             out.append( self.buildMove((0,0)) )
 
+        out.append(self.postamble)
 
         return out
 
