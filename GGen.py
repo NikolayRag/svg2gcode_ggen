@@ -85,7 +85,7 @@ class GGen():
 
 
     
-    def build(self, join=False):
+    def generate(self, join=False):
         outGCode = self.buildHead()
 
 
