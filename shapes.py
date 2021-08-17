@@ -175,8 +175,14 @@ def point_generator(path, mat, flatness):
             simpletransform.applyTransformToPath(mat, p)
 
         for sp in p:
-                cspsubdiv.subdiv( sp, flatness)
                 start = True
-                for csp in sp:
-                    yield csp[1][0], csp[1][1], start
-                    start = False
+                prevsp = sp[0]
+                for csp in sp[1:]:
+                    ssp = [prevsp, csp]
+                    cspsubdiv.subdiv( ssp, flatness)
+
+                    for cp in ssp:
+                        yield cp[1][0], cp[1][1], start
+                        start = False
+
+                    prevsp = csp
