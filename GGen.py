@@ -11,20 +11,20 @@ class GGen():
 
 
     rootET = None
+
+    scale = 1.
     smoothness = 0.02
+    precision = 4
+
     feedRate = 0
     park = False
 
-    precision = 4
     preamble = ''
     shapePre = ''
     shapeIn = ''
     shapeOut = ''
     shapeFinal = ''
     postamble = ''
-
-
-    scale = 1.
 
 
 
@@ -34,35 +34,33 @@ class GGen():
 
 
     def set(self,
+        scale = None,
         smoothness = None,
+        precision = None,
+
         feedRate = None,
         park = None,
-        scale = None,
 
-        precision = None,
         preamble = None,
         shapePre = None,
         shapeIn = None,
         shapeOut = None,
         shapeFinal = None,
-        postamble = None
+        postamble = None,
     ):
+        if scale != None: self.scale = scale
         if smoothness != None: self.smoothness = smoothness
+        if precision != None: self.precision = precision
+
         if feedRate != None: self.feedRate = feedRate
         if park != None: self.park = park
 
-        if precision != None: self.precision = precision
         if preamble != None: self.preamble = preamble
         if shapePre != None: self.shapePre = shapePre
         if shapeIn != None: self.shapeIn = shapeIn
         if shapeOut != None: self.shapeOut = shapeOut
         if shapeFinal != None: self.shapeFinal = shapeFinal
         if postamble != None: self.postamble = postamble
-
-        if scale != None: self.scale = scale
-
-
-
 
 
     
