@@ -14,8 +14,6 @@ class GGen():
     smoothness = 0.02
     feedRate = 0
     park = False
-    maxX = 200
-    maxY = 300
 
     precision = 4
     preamble = ''
@@ -39,8 +37,6 @@ class GGen():
         smoothness = None,
         feedRate = None,
         park = None,
-        maxX = None,
-        maxY = None,
 
         precision = None,
         preamble = None,
@@ -53,8 +49,6 @@ class GGen():
         if smoothness != None: self.smoothness = smoothness
         if feedRate != None: self.feedRate = feedRate
         if park != None: self.park = park
-        if maxX != None: self.maxX = maxX
-        if maxY != None: self.maxY = maxY
 
         if precision != None: self.precision = precision
         if preamble != None: self.preamble = preamble
@@ -65,23 +59,8 @@ class GGen():
         if postamble != None: self.postamble = postamble
 
 
-        width = self.rootET.get('width')
-        height = self.rootET.get('height')
-        if width == None or height == None:
-            viewbox = self.rootET.get('viewBox')
-            if viewbox:
-                _, _, width, height = viewbox.split()                
 
-        if width != None and height != None:
-            width = float(width)
-            height = float(height)
 
-            scale_x = self.maxX / max(width, height)
-            scale_y = self.maxY / max(width, height)
-#            self.scale = min(scale_x, scale_y)
-
-        else:
-            print("Unable to get width and height for the svg")
 
 
     
