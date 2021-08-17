@@ -27,6 +27,28 @@ class svgshape(object):
     def __str__(self):
         return self.xml_node        
 
+
+    def point_generator(self, flatness):
+        cubicP = cubicsuperpath.parsePath( self.d_path() )
+        mat = self.transformation_matrix()
+
+        if mat:
+            simpletransform.applyTransformToPath(mat, cubicP)
+
+        for sp in cubicP:
+                start = True
+                prevsp = sp[0]
+                for csp in sp[1:]:
+                    ssp = [prevsp, csp]
+                    cspsubdiv.subdiv( ssp, flatness)
+
+                    for cp in ssp:
+                        yield cp[1][0], cp[1][1], start
+                        start = False
+
+                    prevsp = csp
+
+
 class path(svgshape):
      def __init__(self, xml_node):
         super(path, self).__init__(xml_node)
@@ -165,23 +187,3 @@ class polyline(polycommon):
             d += " L " + self.points[i]
         return d
 
-def point_generator(path, mat, flatness):
-        p = cubicsuperpath.parsePath(path)
-        if not len(p):
-                return
-
-        if mat:
-            simpletransform.applyTransformToPath(mat, p)
-
-        for sp in p:
-                start = True
-                prevsp = sp[0]
-                for csp in sp[1:]:
-                    ssp = [prevsp, csp]
-                    cspsubdiv.subdiv( ssp, flatness)
-
-                    for cp in ssp:
-                        yield cp[1][0], cp[1][1], start
-                        start = False
-
-                    prevsp = csp

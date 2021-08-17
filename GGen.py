@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 import sys
-from .shapes import point_generator
 from . import shapes
 
 
@@ -98,17 +97,10 @@ class GGen():
 
 
     def shapeGen(self, _shape):
-        d = _shape.d_path()
-        m = _shape.transformation_matrix()
-
-        if not d:
-            return []
-
-
         gShapesA = []
 
         cGShape = []
-        p = point_generator(d, m, self.smoothness)
+        p = _shape.point_generator(self.smoothness)
         for x,y,start in p:
             if start:
                 cGShape = []
