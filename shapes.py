@@ -28,14 +28,18 @@ class svgshape(object):
         return self.xml_node        
 
 
-    def point_generator(self, flatness):
+    def cubicPath(self):
         cubicP = cubicsuperpath.parsePath( self.d_path() )
         mat = self.transformation_matrix()
 
         if mat:
             simpletransform.applyTransformToPath(mat, cubicP)
 
-        for sp in cubicP:
+        return cubicP or []
+
+
+    def point_generator(self, flatness):
+        for sp in self.cubicPath():
                 start = True
                 prevsp = sp[0]
                 for csp in sp[1:]:
