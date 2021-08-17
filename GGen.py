@@ -64,9 +64,17 @@ class GGen():
 
 
     
-    def generate(self, join=False):
-        outGCode = self.buildHead()
+    def generate(self,
+        join=False,
 
+        scale = None,
+        smoothness = None,
+        precision = None,
+    ):
+        self.set(scale=scale, smoothness=smoothness, precision=precision)
+
+
+        outGCode = self.buildHead()
 
         for elem in self.rootET.iter():
             try:
