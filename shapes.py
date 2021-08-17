@@ -7,7 +7,6 @@ from . import simplepath
 from . import simpletransform 
 from . import cubicsuperpath
 from . import cspsubdiv
-from .bezmisc import beziersplitatt
 
 
 class svgshape(object):
