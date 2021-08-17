@@ -40,17 +40,17 @@ class svgshape(object):
 
     def point_generator(self, flatness):
         for sp in self.cubicPath():
-                start = True
-                prevsp = sp[0]
-                for csp in sp[1:]:
-                    ssp = [prevsp, csp]
-                    cspsubdiv.subdiv( ssp, flatness)
+            start = True
+            prevsp = sp[0]
+            for csp in sp[1:]:
+                ssp = [prevsp, csp]
+                cspsubdiv.subdiv( ssp, flatness)
 
-                    for cp in ssp:
-                        yield cp[1][0], cp[1][1], start
-                        start = False
+                for cp in ssp:
+                    yield cp[1][0], cp[1][1], start
+                    start = False
 
-                    prevsp = csp
+                prevsp = csp
 
 
 class path(svgshape):
