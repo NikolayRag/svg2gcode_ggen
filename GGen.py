@@ -37,6 +37,7 @@ class GGen():
         smoothness = None,
         feedRate = None,
         park = None,
+        scale = None,
 
         precision = None,
         preamble = None,
@@ -58,6 +59,7 @@ class GGen():
         if shapeFinal != None: self.shapeFinal = shapeFinal
         if postamble != None: self.postamble = postamble
 
+        if scale != None: self.scale = scale
 
 
 
