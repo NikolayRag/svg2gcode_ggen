@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
 import sys
-from . import shapes as shapes_pkg
 from .shapes import point_generator
+from . import shapes
 
 
 
@@ -84,7 +84,7 @@ class GGen():
                 continue
 
             if tag_suffix in self.svg_shapes:
-                shape_class = getattr(shapes_pkg, tag_suffix)
+                shape_class = getattr(shapes, tag_suffix)
                 shapesA = self.shapeGen(shape_class(elem))
 
                 self.shapeDecorate(elem, shapesA, outGCode)
