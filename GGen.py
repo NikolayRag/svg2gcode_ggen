@@ -11,7 +11,8 @@ class GGen():
 
     rootET = None
 
-    scale = 1.
+    scaleX = 1.
+    scaleY = 1.
     smoothness = 0.02
     precision = 4
 
@@ -53,7 +54,8 @@ class GGen():
         shapeFinal = None,
         postamble = None,
     ):
-        if scale != None: self.scale = scale
+        if scale != None:
+            self.scaleX, self.scaleY = scale if hasattr(scale,'__iter__') else (scale,scale)
         if smoothness != None: self.smoothness = smoothness
         if precision != None: self.precision = precision
 
@@ -109,7 +111,7 @@ class GGen():
                 cGShape = []
                 gShapesA.append(cGShape)
 
-            cGShape.append( (self.scale*x, self.scale*y) )
+            cGShape.append((x, y))
 
 
         return gShapesA
@@ -158,7 +160,7 @@ class GGen():
             _coords = (_coords,)
 
         p = self.precision
-        return [f"X{round(_x,p)}Y{round(_y,p)}" for _x,_y in _coords]
+        return [f"X{round(self.scaleX*_x,p)}Y{round(self.scaleY*_y,p)}" for _x,_y in _coords]
 
 
 
