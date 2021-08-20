@@ -69,8 +69,6 @@ class GGen():
 
     
     def generate(self,
-        join=False,
-
         scale = None,
         smoothness = None,
         precision = None,
