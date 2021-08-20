@@ -43,7 +43,7 @@ for gEntity in ggObject.generate(
 ```
 where **gEntity** will be complete list of G-commands one for head, each shape, and tail.
 
-Converting ```str(ggObject)``` is allowed, resulting in complete g-code within one string.
+Converting to string explicitely with ```str()``` or implicitely is allowed, obvoiusly resulting in complete g-code within one string.
 
 
 In addition to being strings, **shapePre**, **shapeIn**, **shapeOut** and **shapeFinal** passed can be hook functions to generate inline:
