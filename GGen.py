@@ -101,6 +101,10 @@ class GGen():
 
 
 
+###private###
+
+
+
     def shapeGen(self, _shape):
         gShapesA = []
 
