@@ -78,7 +78,8 @@ class GGen():
         self.set(scale=scale, smoothness=smoothness, precision=precision)
 
 
-        outGCode = self.buildHead()
+        el = self.buildHead()
+        yield el
 
         for elem in self.rootET.iter():
             try:
@@ -91,13 +92,21 @@ class GGen():
                 shape_class = getattr(shapes, tag_suffix)
                 shapesA = self.shapeGen(shape_class(elem))
 
-                self.shapeDecorate(elem, shapesA, outGCode)
+                el = self.shapeDecorate(elem, shapesA)
+                yield el
 
 
-        outGCode += self.buildTail()
+        el = self.buildTail()
+        yield el
 
 
-        return "\n".join(outGCode) if join else outGCode
+
+    def __str__(self):
+        gFlat = []
+        for g in self.generate():
+            gFlat += g
+
+        return "\n".join(gFlat)
 
 
 
@@ -122,7 +131,10 @@ class GGen():
 
 
 
-    def shapeDecorate(self, _cEl, _shapes, _outCode=[]):
+    def shapeDecorate(self, _cEl, _shapes, _outCode=None):
+        if not _outCode: _outCode = []
+
+
         injectPre = self.buildInline(self.shapePre, _cEl)
         injectFinal = self.buildInline(self.shapeFinal, _cEl, _shapes)
 
