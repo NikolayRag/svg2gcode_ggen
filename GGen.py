@@ -32,13 +32,19 @@ class GGen():
 
 
 
+    def setDevice(self,
+        feedRate = None,
+        park = None,
+    ):
+        if feedRate != None: self.feedRate = feedRate
+        if park != None: self.park = park
+
+
+
     def set(self,
         scale = None,
         smoothness = None,
         precision = None,
-
-        feedRate = None,
-        park = None,
 
         preamble = None,
         shapePre = None,
@@ -50,9 +56,6 @@ class GGen():
         if scale != None: self.scale = scale
         if smoothness != None: self.smoothness = smoothness
         if precision != None: self.precision = precision
-
-        if feedRate != None: self.feedRate = feedRate
-        if park != None: self.park = park
 
         if preamble != None: self.preamble = preamble
         if shapePre != None: self.shapePre = shapePre
