@@ -46,9 +46,13 @@ class svgshape(object):
                 ssp = [prevsp, csp]
                 cspsubdiv.subdiv( ssp, flatness)
 
-                for cp in ssp:
-                    yield cp[1][0], cp[1][1], start
+                if start:
+                    cp = ssp[0]
+                    yield cp[1][0], cp[1][1], True
                     start = False
+
+                for cp in ssp[1:]:
+                    yield cp[1][0], cp[1][1], False
 
                 prevsp = csp
 
