@@ -96,10 +96,9 @@ Most notable changes:
 * Python 3 compatable
 * Is importable module
 * GGen class as interface
-* 
-* Fix: curved shapes collected with wrong points [https://github.com/NikolayRag/svg2gcode_ggen/commit/2733998fb56177be35ea0a91014296366bd2bd3a](#2733998)
-* Fix: multishapes proccessed separately per-shape [https://github.com/NikolayRag/svg2gcode_ggen/commit/43d4dba31fd7cfb5d92c99fd018b30991fcd4d90](43d4dba)
-* Fix: complex curves out or recursion limits [https://github.com/NikolayRag/svg2gcode_ggen/commit/33737f2b23cd614b60b2f5b16a2896b5cdddc1d3](#33737f2)
+* Fix: curved shapes collected with wrong points [#2733998](https://github.com/NikolayRag/svg2gcode_ggen/commit/2733998fb56177be35ea0a91014296366bd2bd3a)
+* Fix: multishapes proccessed separately per-shape [43d4dba](https://github.com/NikolayRag/svg2gcode_ggen/commit/43d4dba31fd7cfb5d92c99fd018b30991fcd4d90)
+* Fix: complex curves out or recursion limits [#33737f2](https://github.com/NikolayRag/svg2gcode_ggen/commit/33737f2b23cd614b60b2f5b16a2896b5cdddc1d3)
 
 
 Original project terms:
