@@ -15,14 +15,17 @@ svgRoot = XML.parse('file.svg').getroot()
 import GGen
 
 ggObject = GGen.GGen( svgRoot )
-ggObject.set(
-    smoothness = 0.02,
-    feedRate = 0,
-    park = False,
-    maxX = 200,
-    maxY = 300,
 
+ggObject.setDevice(
+    feedRate = 0,
+    park = False
+)
+
+ggObject.set(
+    scale = 1,
+    smoothness = 0.02,
     precision = 4,
+
     preamble = '',
     shapePre = '',
     shapeIn = '',
@@ -31,7 +34,9 @@ ggObject.set(
     postamble = ''
 )
 ggRows = ggObject.generate(
-	join = False
+    scale = None,
+    smoothness = None,
+    precision = None
 )
 ```
 
@@ -72,18 +77,18 @@ ggObject.set(
 Typical static config for laser engraver can be:
 ```python
 ggObject.set(
-    preamble = 'G90 M4 S0',
-    shapePre = 'G0',
-    shapeIn = 'S100 G1',
-    shapeOut = 'S0',
-    postamble = 'M5 G0 X0Y0'
+    preamble = 'G90 M4 S0', #Set laser on with 0% bightness
+    shapePre = 'G0', #Fast position
+    shapeIn = 'S100 G1',  #Set 100% laser bightness and start feed move
+    shapeOut = 'S0', #Set 0% laser bightness
+    postamble = 'M5 G0 X0Y0' #Set laser off and park
 )
 ```
 
 
 
-Original project:
------------------
+Reference:
+----------
 
 Forked from [vishpat/svg2gcode](https://github.com/vishpat/svg2gcode) without Inkscape branch.
 
@@ -91,8 +96,10 @@ Most notable changes:
 * Python 3 compatable
 * Is importable module
 * GGen class as interface
-* Fix: curved shapes collected with wrong points
-* Fix: multishapes pre/in/post -decorated separately
+* 
+* Fix: curved shapes collected with wrong points [https://github.com/NikolayRag/svg2gcode_ggen/commit/2733998fb56177be35ea0a91014296366bd2bd3a](#2733998)
+* Fix: multishapes proccessed separately per-shape [https://github.com/NikolayRag/svg2gcode_ggen/commit/43d4dba31fd7cfb5d92c99fd018b30991fcd4d90](43d4dba)
+* Fix: complex curves out or recursion limits [https://github.com/NikolayRag/svg2gcode_ggen/commit/33737f2b23cd614b60b2f5b16a2896b5cdddc1d3](#33737f2)
 
 
 Original project terms:
