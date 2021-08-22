@@ -28,8 +28,8 @@ class SvgTag(object):
 
         return "<path d=\"" + dPath + "\"/>"
 
-    def __str__(self):
-        return self.xml_node        
+    def xml(self):
+        return self.xml_node
 
 
     def cubicPath(self):
