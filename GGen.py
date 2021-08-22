@@ -79,7 +79,10 @@ class GGen():
         el = self.buildHead()
         yield el
 
-        for elem in self.rootET.iter():
+
+        cTree = []
+        self.iterateTree(self.rootET, cTree)
+        for dep, elem in cTree:
             try:
                 _, tag_suffix = elem.tag.split('}')
             except ValueError:
@@ -109,6 +112,15 @@ class GGen():
 
 
 ###private###
+
+
+
+    def iterateTree(self, _el, _tree, _dep=0,):
+        _tree.append([_dep, _el])
+
+        _dep += 1
+        for cEl in _el.getchildren():
+            self.iterateTree(cEl, _tree, _dep)
 
 
 
