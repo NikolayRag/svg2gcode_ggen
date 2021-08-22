@@ -70,6 +70,8 @@ class GGen():
 
     
     def generate(self,
+        xform = [[1.0, 0.0, 0.0], [0.0, -1.0, 0.0]],
+
         scale = None,
         smoothness = None,
         precision = None,
