@@ -144,7 +144,7 @@ class GGen():
         gShapesA = []
 
         cGShape = []
-        p = _shape.point_generator(self.smoothness)
+        p = _shape.divide(self.smoothness)
         for x,y,start in p:
             if start:
                 cGShape = []

@@ -46,8 +46,8 @@ class SvgTag(object):
         return cubicP
 
 
-    def point_generator(self, flatness):
         for sp in self.cubicPath():
+    def divide(self, flatness):
             start = True
             prevsp = sp[0]
             for csp in sp[1:]:
