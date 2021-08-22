@@ -32,16 +32,18 @@ class SvgTag(object):
         return self.xml_node
 
 
-    def cubicPath(self):
+    def cubicPath(self, xform=True):
         dPath = self.d_path()
         if not dPath:
             return []
 
         cubicP = cubicsuperpath.parsePath(dPath)
-        mat = self.transformation_matrix()
 
-        if mat:
-            simpletransform.applyTransformToPath(mat, cubicP)
+        if xform == True:
+            xform = self.transformation_matrix()
+
+        if xform:
+            simpletransform.applyTransformToPath(xform, cubicP)
 
         return cubicP
 
