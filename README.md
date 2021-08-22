@@ -21,8 +21,10 @@ ggObject.setDevice(
     park = False
 )
 
+#notice default xform is only Y-inverted, NOT offset to place in positive area
 ggObject.set(
-    scale = 1,
+    xform = [[1.0, 0.0, 0.0], [0.0, -1.0, 0.0]],
+
     smoothness = 0.02,
     precision = 4,
 
@@ -34,11 +36,9 @@ ggObject.set(
     postamble = ''
 )
 
-#notice default xform is only Y-inverted, NOT offset to place in positive area
 for gEntity in ggObject.generate(
-    xform = [[1.0, 0.0, 0.0], [0.0, -1.0, 0.0]],
+    xform = None,
 
-    scale = None,
     smoothness = None,
     precision = None
 ):
