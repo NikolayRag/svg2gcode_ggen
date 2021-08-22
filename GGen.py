@@ -107,7 +107,7 @@ class GGen():
 
 
 
-    def iterateTree(self, _el, _tree, _dep=0,):
+    def iterateTree(self, _el, _treeA, _dep=0,):
         try:
             _, cTag = _el.tag.split('}')
         except ValueError:
@@ -121,9 +121,8 @@ class GGen():
 
             _tree.append([_dep, _el, cShape])
 
-        _dep += 1
         for cEl in _el.getchildren():
-            self.iterateTree(cEl, _tree, _dep)
+            self.iterateTree(cEl, _treeA, _dep+1)
 
 
 
