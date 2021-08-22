@@ -82,10 +82,10 @@ class GGen():
 
         cTree = []
         self.iterateTree(self.rootET, cTree)
-        for cDep, cElem, cShape in cTree:
+        for cDep, cShape in cTree:
             shapesA = self.shapeGen(cShape)
 
-            el = self.shapeDecorate(cElem, shapesA)
+            el = self.shapeDecorate(cShape.xml(), shapesA)
             yield el
 
 
@@ -119,7 +119,8 @@ class GGen():
             shape_class = getattr(shapes, cTag)
             cShape = shape_class(_el)
 
-            _tree.append([_dep, _el, cShape])
+            _treeA.append([_dep, cShape])
+
         else:
             _dep -= 1 #roll back unknown tag
 
