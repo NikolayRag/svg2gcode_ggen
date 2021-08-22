@@ -82,18 +82,18 @@ class GGen():
 
         cTree = []
         self.iterateTree(self.rootET, cTree)
-        for dep, elem in cTree:
+        for cDep, cElem in cTree:
             try:
-                _, tag_suffix = elem.tag.split('}')
+                _, tag_suffix = cElem.tag.split('}')
             except ValueError:
-                print('Skip tag:', elem.tag)
+                print('Skip tag:', cElem.tag)
                 continue
 
             if tag_suffix in self.svg_shapes:
                 shape_class = getattr(shapes, tag_suffix)
-                shapesA = self.shapeGen(shape_class(elem))
+                shapesA = self.shapeGen(shape_class(cElem))
 
-                el = self.shapeDecorate(elem, shapesA)
+                el = self.shapeDecorate(cElem, shapesA)
                 yield el
 
 
