@@ -82,13 +82,11 @@ class GGen():
 
         cTree = []
         self.iterateTree(self.rootET, cTree)
-        for cDep, cElem, cTag in cTree:
-            if cTag in self.svg_shapes:
-                shape_class = getattr(shapes, cTag)
-                shapesA = self.shapeGen(shape_class(cElem))
+        for cDep, cElem, cShape in cTree:
+            shapesA = self.shapeGen(cShape)
 
-                el = self.shapeDecorate(cElem, shapesA)
-                yield el
+            el = self.shapeDecorate(cElem, shapesA)
+            yield el
 
 
         el = self.buildTail()
@@ -116,7 +114,12 @@ class GGen():
             print('Skip tag:', _el.tag)
             return
 
-        _tree.append([_dep, _el, cTag])
+
+        if cTag in self.svg_shapes:
+            shape_class = getattr(shapes, cTag)
+            cShape = shape_class(_el)
+
+            _tree.append([_dep, _el, cShape])
 
         _dep += 1
         for cEl in _el.getchildren():
