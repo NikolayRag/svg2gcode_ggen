@@ -93,12 +93,12 @@ class GGen():
             matrixAcc.append(cShape.transformation_matrix())
 
 
-            xform = [[1.0, 0.0, 0.0], [0.0, 1.0, 0.0]]
+            cXform = [[1.0, 0.0, 0.0], [0.0, -1.0, 0.0]]
             for m in matrixAcc:
                 if m:
-                    xform = simpletransform.composeTransform(xform, m)
+                    cXform = simpletransform.composeTransform(cXform, m)
 
-            shapesA = self.shapeGen(cShape, xform)
+            shapesA = self.shapeGen(cShape, cXform)
 
             el = self.shapeDecorate(cShape.xml(), shapesA)
             yield el
