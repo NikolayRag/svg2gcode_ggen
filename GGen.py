@@ -93,7 +93,7 @@ class GGen():
             matrixAcc.append(cShape.transformation_matrix())
 
 
-            cXform = [[1.0, 0.0, 0.0], [0.0, -1.0, 0.0]]
+            cXform = xform
             for m in matrixAcc:
                 if m:
                     cXform = simpletransform.composeTransform(cXform, m)
