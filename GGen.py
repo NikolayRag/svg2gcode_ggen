@@ -88,17 +88,15 @@ class GGen():
         for cDep, cShape in cTree:
             if cDep <= prevDep: #out of branch
                 matrixAcc = matrixAcc[:(cDep-prevDep-1)]
+            prevDep = cDep
 
             matrixAcc.append(cShape.transformation_matrix())
-
-            prevDep = cDep
 
 
             xform = [[1.0, 0.0, 0.0], [0.0, 1.0, 0.0]]
             for m in matrixAcc:
                 if m:
                     xform = simpletransform.composeTransform(xform, m)
-
 
             shapesA = self.shapeGen(cShape, xform)
 
