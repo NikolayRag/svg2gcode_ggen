@@ -80,9 +80,19 @@ class GGen():
         yield el
 
 
+        matrixAcc = []
+        prevDep = 0
         cTree = []
         self.iterateTree(self.rootET, cTree)
         for cDep, cShape in cTree:
+            if cDep <= prevDep: #out of branch
+                matrixAcc = matrixAcc[:(cDep-prevDep-1)]
+
+            matrixAcc.append(cShape.transformation_matrix())
+
+            prevDep = cDep
+
+
             shapesA = self.shapeGen(cShape)
 
             el = self.shapeDecorate(cShape.xml(), shapesA)
