@@ -48,8 +48,8 @@ class SvgTag(object):
         return cubicP
 
 
-        for sp in self.cubicPath():
     def divide(self, flatness):
+        for sp in self.cubicPath():
             start = True
             prevsp = sp[0]
             for csp in sp[1:]:
