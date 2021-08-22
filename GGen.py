@@ -2,6 +2,7 @@
 
 import sys
 from . import shapes
+from . import simpletransform 
 
 
 
@@ -93,7 +94,13 @@ class GGen():
             prevDep = cDep
 
 
-            shapesA = self.shapeGen(cShape)
+            xform = [[1.0, 0.0, 0.0], [0.0, 1.0, 0.0]]
+            for m in matrixAcc:
+                if m:
+                    xform = simpletransform.composeTransform(xform, m)
+
+
+            shapesA = self.shapeGen(cShape, xform)
 
             el = self.shapeDecorate(cShape.xml(), shapesA)
             yield el
@@ -140,11 +147,11 @@ class GGen():
 
 
 
-    def shapeGen(self, _shape):
+    def shapeGen(self, _shape, _xform):
         gShapesA = []
 
         cGShape = []
-        p = _shape.divide(self.smoothness)
+        p = _shape.divide(self.smoothness, _xform)
         for x,y,start in p:
             if start:
                 cGShape = []
