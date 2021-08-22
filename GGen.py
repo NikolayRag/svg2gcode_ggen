@@ -12,8 +12,7 @@ class GGen():
 
     rootET = None
 
-    scaleX = 1.
-    scaleY = 1.
+    xform = [[1.0, 0.0, 0.0], [0.0, -1.0, 0.0]]
     smoothness = 0.02
     precision = 4
 
@@ -44,7 +43,7 @@ class GGen():
 
 
     def set(self,
-        scale = None,
+        xform = None,
         smoothness = None,
         precision = None,
 
@@ -55,8 +54,7 @@ class GGen():
         shapeFinal = None,
         postamble = None,
     ):
-        if scale != None:
-            self.scaleX, self.scaleY = scale if hasattr(scale,'__iter__') else (scale,scale)
+        if xform != None: self.xform = xform
         if smoothness != None: self.smoothness = smoothness
         if precision != None: self.precision = precision
 
@@ -70,13 +68,11 @@ class GGen():
 
     
     def generate(self,
-        xform = [[1.0, 0.0, 0.0], [0.0, -1.0, 0.0]],
-
-        scale = None,
+        xform = None,
         smoothness = None,
         precision = None,
     ):
-        self.set(scale=scale, smoothness=smoothness, precision=precision)
+        self.set(xform=xform, smoothness=smoothness, precision=precision)
 
 
         el = self.buildHead()
@@ -95,7 +91,7 @@ class GGen():
             matrixAcc.append(cShape.transformation_matrix())
 
 
-            cXform = xform
+            cXform = self.xform
             for m in matrixAcc:
                 if m:
                     cXform = simpletransform.composeTransform(cXform, m)
@@ -209,7 +205,7 @@ class GGen():
             _coords = (_coords,)
 
         p = self.precision
-        return [f"X{round(self.scaleX*_x,p)}Y{round(self.scaleY*_y,p)}" for _x,_y in _coords]
+        return [f"X{round(_x,p)}Y{round(_y,p)}" for _x,_y in _coords]
 
 
 
