@@ -34,7 +34,10 @@ ggObject.set(
     postamble = ''
 )
 
+#notice default xform is only Y-inverted, NOT offset to place in positive area
 for gEntity in ggObject.generate(
+    xform = [[1.0, 0.0, 0.0], [0.0, -1.0, 0.0]],
+
     scale = None,
     smoothness = None,
     precision = None
