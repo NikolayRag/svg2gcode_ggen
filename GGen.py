@@ -120,6 +120,9 @@ class GGen():
             cShape = shape_class(_el)
 
             _tree.append([_dep, _el, cShape])
+        else:
+            _dep -= 1 #roll back unknown tag
+
 
         for cEl in _el.getchildren():
             self.iterateTree(cEl, _treeA, _dep+1)
