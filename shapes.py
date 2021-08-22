@@ -65,6 +65,14 @@ class SvgTag(object):
                 prevsp = csp
 
 
+class g(SvgTag):
+     def __init__(self, xml_node):
+        super(g, self).__init__(xml_node)
+
+     def d_path(self):
+        return False
+
+
 class path(SvgTag):
      def __init__(self, xml_node):
         super(path, self).__init__(xml_node)

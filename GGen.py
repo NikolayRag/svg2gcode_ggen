@@ -6,7 +6,7 @@ from . import shapes
 
 
 class GGen():
-    svg_shapes = ('rect', 'circle', 'ellipse', 'line', 'polyline', 'polygon', 'path')
+    svg_shapes = ('g', 'rect', 'circle', 'ellipse', 'line', 'polyline', 'polygon', 'path')
 
 
     rootET = None
