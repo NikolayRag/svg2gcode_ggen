@@ -9,12 +9,12 @@ Quick useage, also showing defaults:
 
 ```python
 import xml.etree.ElementTree as XML
-svgRoot = XML.parse('file.svg').getroot()
+svgXml = XML.parse('file.svg')
 
 
 import GGen
 
-ggObject = GGen.GGen( svgRoot )
+ggObject = GGen.GGen( svgXml.getroot() )
 
 ggObject.setDevice(
     feedRate = 0,
@@ -103,11 +103,7 @@ Most notable changes:
 * Is importable module
 * GGen class as interface
 * Used as generator
+* Gather transform all over hierarchy for node
 * Fix: curved shapes collected with wrong points [#2733998](https://github.com/NikolayRag/svg2gcode_ggen/commit/2733998fb56177be35ea0a91014296366bd2bd3a)
 * Fix: proccess multishapes per-shape [#43d4dba](https://github.com/NikolayRag/svg2gcode_ggen/commit/43d4dba31fd7cfb5d92c99fd018b30991fcd4d90)
 * Fix: complex curves out or recursion limits [#33737f2](https://github.com/NikolayRag/svg2gcode_ggen/commit/33737f2b23cd614b60b2f5b16a2896b5cdddc1d3)
-
-
-Original project terms:
-
-The compiler is based on the eggbot project and it basically converts all of the SVG shapes into bezier curves. The bezier curves are then recursively sub divided until desired smoothness is achieved. The sub curves are then approximated as lines which are then converted into g-code. 
