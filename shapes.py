@@ -9,7 +9,7 @@ from . import cubicsuperpath
 from . import cspsubdiv
 
 
-class svgshape(object):
+class SvgTag(object):
     
     def __init__(self, xml_node):
         self.xml_node = xml_node 
@@ -57,7 +57,7 @@ class svgshape(object):
                 prevsp = csp
 
 
-class path(svgshape):
+class path(SvgTag):
      def __init__(self, xml_node):
         super(path, self).__init__(xml_node)
 
@@ -71,7 +71,7 @@ class path(svgshape):
      def d_path(self):
         return self.d     
 
-class rect(svgshape):
+class rect(SvgTag):
   
     def __init__(self, xml_node):
         super(rect, self).__init__(xml_node)
@@ -97,7 +97,7 @@ class rect(svgshape):
         a.append( [' Z', []] )
         return simplepath.formatPath(a)     
 
-class ellipse(svgshape):
+class ellipse(SvgTag):
 
     def __init__(self, xml_node):
         super(ellipse, self).__init__(xml_node)
@@ -136,7 +136,7 @@ class circle(ellipse):
             self.cx = self.cy = self.r = 0
             logging.error("Circle: Unable to get the attributes for %s", self.xml_node)
 
-class line(svgshape):
+class line(SvgTag):
 
     def __init__(self, xml_node):
         super(line, self).__init__(xml_node)
@@ -157,7 +157,7 @@ class line(svgshape):
         a.append( ['L ', [self.x2, self.y2]] )
         return simplepath.formatPath(a)
 
-class polycommon(svgshape):
+class polycommon(SvgTag):
 
     def __init__(self, xml_node, polytype):
         super(polycommon, self).__init__(xml_node)
