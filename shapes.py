@@ -22,20 +22,28 @@ class SvgTag(object):
         return simpletransform.parseTransform(t) if t is not None else None
 
     def svg_path(self):
-        return "<path d=\"" + self.d_path() + "\"/>"
+        dPath = self.d_path()
+        if not dPath:
+            return
+
+        return "<path d=\"" + dPath + "\"/>"
 
     def __str__(self):
         return self.xml_node        
 
 
     def cubicPath(self):
-        cubicP = cubicsuperpath.parsePath( self.d_path() )
+        dPath = self.d_path()
+        if not dPath:
+            return []
+
+        cubicP = cubicsuperpath.parsePath(dPath)
         mat = self.transformation_matrix()
 
         if mat:
             simpletransform.applyTransformToPath(mat, cubicP)
 
-        return cubicP or []
+        return cubicP
 
 
     def point_generator(self, flatness):
