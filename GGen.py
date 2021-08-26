@@ -23,7 +23,6 @@ class GGen():
     shapePre = ''
     shapeIn = ''
     shapeOut = ''
-    shapeFinal = ''
     postamble = ''
 
 
@@ -54,7 +53,6 @@ class GGen():
         shapePre = None,
         shapeIn = None,
         shapeOut = None,
-        shapeFinal = None,
         postamble = None,
     ):
         if xform != None: self.xform = xform
@@ -65,7 +63,6 @@ class GGen():
         if shapePre != None: self.shapePre = shapePre
         if shapeIn != None: self.shapeIn = shapeIn
         if shapeOut != None: self.shapeOut = shapeOut
-        if shapeFinal != None: self.shapeFinal = shapeFinal
         if postamble != None: self.postamble = postamble
 
 
@@ -172,13 +169,13 @@ class GGen():
 
 
         injectPre = self.buildInline(self.shapePre, _cEl)
-        injectFinal = self.buildInline(self.shapeFinal, _cEl, _shapes)
 
 
+        cI = 0
         for cShape in _shapes:
             if len(cShape):
                 injectIn = self.buildInline(self.shapeIn, _cEl, cShape[0])
-                injectOut = self.buildInline(self.shapeOut, _cEl, cShape)
+                injectOut = self.buildInline(self.shapeOut, _cEl, [_shapes, cI])
 
                 if injectPre: _outCode += [injectPre]
                 _outCode += self.buildMove(cShape[0])
@@ -186,7 +183,7 @@ class GGen():
                 _outCode += self.buildMove(cShape[1:])
                 if injectOut: _outCode += [injectOut]
 
-        if injectFinal: _outCode += [injectFinal]
+            cI += 1
 
 
         return _outCode
