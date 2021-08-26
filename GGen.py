@@ -110,9 +110,13 @@ class GGen():
 
 
 
-    def __str__(self):
+    def str(self,
+        xform = None,
+        smoothness = None,
+        precision = None,
+    ):
         gFlat = []
-        for g in self.generate():
+        for g in self.generate(xform=xform, smoothness=smoothness, precision=precision):
             gFlat += g
 
         return "\n".join(gFlat)
