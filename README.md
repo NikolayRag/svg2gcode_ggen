@@ -46,7 +46,12 @@ for gEntity in ggObject.generate(
 
 #or
 
-print( ggObject.str() )
+print( ggObject.str(
+    xform = None,
+
+    smoothness = None,
+    precision = None
+) )
 
 ```
 where **gEntity** will be complete list of G-commands.
