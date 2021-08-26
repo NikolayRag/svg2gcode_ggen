@@ -46,7 +46,7 @@ for gEntity in ggObject.generate(
 
 #or
 
-    print( ggObject.str() )
+print( ggObject.str() )
 
 ```
 where **gEntity** will be complete list of G-commands.
