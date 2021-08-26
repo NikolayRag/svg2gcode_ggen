@@ -27,6 +27,9 @@ class GGen():
     postamble = ''
 
 
+    templateG = 'X{x}Y{y}]'
+
+
 
     def __init__(self, _rootET):
         self.rootET = _rootET
@@ -205,7 +208,7 @@ class GGen():
             _coords = (_coords,)
 
         p = self.precision
-        return [f"X{round(_x,p)}Y{round(_y,p)}" for _x,_y in _coords]
+        return [self.templateG.format(x=round(x,p), y=round(y,p)) for x,y in _coords]
 
 
 
