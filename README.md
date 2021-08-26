@@ -32,7 +32,6 @@ ggObject.set(
     shapePre = '',
     shapeIn = '',
     shapeOut = '',
-    shapeFinal = '',
     postamble = ''
 )
 
@@ -57,37 +56,33 @@ gString = ggObject.str(
 where **gEntity** will be complete list of G-commands.
 
 
-In addition to being strings, **shapePre**, **shapeIn**, **shapeOut** and **shapeFinal** passed can be hook functions to generate inline:
+In addition to being strings, **shapePre**, **shapeIn** and **shapeOut** passed can be hook functions to generate inline:
 
 * **shapePre(currentSvgElement)**  
     called once, inlined before starting point of each sub-shape
 * **shapeIn(currentSvgElement, pointZero)**  
     called for each sub-shape, inlined after starting point
-* **shapeOut(currentSvgElement, pointsList)**  
+* **shapeOut(currentSvgElement, [[shapePointsList, ..], shapeId])**  
     called for each sub-shape and inlined after last point
-* **shapeFinal(currentSvgEelement, shapesList)**  
-    called once, inlined once at end of all sub-shapes
 
 
 ```python
 def shapePreHook(_element):
-    return( f"(pre for {_element.tag})" )
+    print( f"(pre for {_element.tag})" )
 
 def shapeInHook(_element, _point):
-    return( f"(in for {_element.tag}, starting at {_point})" )
+    print( f"(in for {_element.tag}, starting at {_point})" )
 
-def shapeOutHook(_element, _shape):
-    return( f"(post for {_element.tag}, {len(_shape)} points)" )
-
-def shapeFinalHook(_element, _shapes):
-	return( f"(final for {_element.tag}, {len(_shapes)} sub-shapes)" )
+def shapeOutHook(_element, _shapes):
+    print( f"(out for {_element.tag}, {len(_shapes[0])}")
+    shapeId = _shapes[1]
+    print( f"current shape: {shapeId} with {len(_shapes[shapeId])})" )
 
 
 ggObject.set(
     shapePre = shapePreHook,
     shapeIn = shapeInHook,
-    shapeOut = shapeOutHook,
-    shapeFinal = shapeFinalHook
+    shapeOut = shapeOutHook
 )
 ```
 
