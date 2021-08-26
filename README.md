@@ -2,7 +2,7 @@ SVG to GCode converter
 ----------------------
 
 
-Source provided is an SVG within xml.etree.ElementTree root Element, as used widely.
+Source provided is an SVG within xml.etree.ElementTree root, as used widely.
 
 Quick useage, also showing defaults:
 ------------------------------------
@@ -21,7 +21,7 @@ ggObject.setDevice(
     park = False
 )
 
-#notice default xform is only Y-inverted, NOT offset to place in positive area
+#notice default xform is only Y-inverted matrix, WITHOUT positive area offset
 ggObject.set(
     xform = [[1.0, 0.0, 0.0], [0.0, -1.0, 0.0]],
 
@@ -43,10 +43,13 @@ for gEntity in ggObject.generate(
     precision = None
 ):
     do_something_with( gEntity )
-```
-where **gEntity** will be complete list of G-commands one for head, each shape, and tail.
 
-Converting to string explicitely with ```str(ggObject)``` or implicitely like in ```print(ggObject)``` is allowed, obvoiusly resulting in complete g-code within one string.
+#or
+
+    print( ggObject.str() )
+
+```
+where **gEntity** will be complete list of G-commands.
 
 
 In addition to being strings, **shapePre**, **shapeIn**, **shapeOut** and **shapeFinal** passed can be hook functions to generate inline:
