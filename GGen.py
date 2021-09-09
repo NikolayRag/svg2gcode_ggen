@@ -26,7 +26,7 @@ class GGen():
     postamble = ''
 
 
-    templateG = 'X{x}Y{y}]'
+    templateG = 'X{x}Y{y}'
 
 
 
