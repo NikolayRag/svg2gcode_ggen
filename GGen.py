@@ -146,7 +146,7 @@ class GGen():
             _dep -= 1 #roll back unknown tag
 
 
-        for cEl in _el.getchildren():
+        for cEl in _el:
             self.iterateTree(cEl, _treeA, _dep+1)
 
 
