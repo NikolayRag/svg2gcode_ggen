@@ -59,11 +59,14 @@ where **gEntity** will be complete list of G-commands.
 In addition to being strings, **shapePre**, **shapeIn** and **shapeOut** passed can be hook functions to generate inline:
 
 * **shapePre(currentSvgElement)**  
-    called once, inlined before starting point of each sub-shape
+    Called once, inlined before starting point of each sub-shape.
+    May return False to skip shape entirely.
+
 * **shapeIn(currentSvgElement, pointZero)**  
-    called for each sub-shape, inlined after starting point
+    Called for each sub-shape, inlined after starting point
+    
 * **shapeOut(currentSvgElement, [[shapePointsList, ..], shapeId])**  
-    called for each sub-shape and inlined after last point
+    Called for each sub-shape and inlined after last point
 
 
 ```python
