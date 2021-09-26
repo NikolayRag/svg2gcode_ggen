@@ -174,6 +174,9 @@ class GGen():
 
         injectPre = self.buildInline(self.shapePre, _cEl)
 
+        if injectPre == False:
+            return _outCode
+
 
         cI = 0
         for cShape in _shapes:
@@ -181,11 +184,11 @@ class GGen():
                 injectIn = self.buildInline(self.shapeIn, _cEl, cShape[0])
                 injectOut = self.buildInline(self.shapeOut, _cEl, [_shapes, cI])
 
-                if injectPre: _outCode += [injectPre]
+                _outCode += [injectPre or '']
                 _outCode += self.buildMove(cShape[0])
-                if injectIn: _outCode += [injectIn]
+                _outCode += [injectIn or '']
                 _outCode += self.buildMove(cShape[1:])
-                if injectOut: _outCode += [injectOut]
+                _outCode += [injectOut or '']
 
             cI += 1
 
@@ -200,9 +203,6 @@ class GGen():
                 _tmpl = _tmpl(_el, _arg)
             else:
                 _tmpl = _tmpl(_el)
-
-        if not isinstance(_tmpl, str):
-            _tmpl = ''
 
         return _tmpl
 
