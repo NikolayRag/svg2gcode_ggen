@@ -10,7 +10,7 @@ class GGen():
     svg_shapes = ('g', 'rect', 'circle', 'ellipse', 'line', 'polyline', 'polygon', 'path')
 
 
-    rootET = None
+    tree = None
 
     xform = [[1.0, 0.0, 0.0], [0.0, -1.0, 0.0]]
     smoothness = 0.02
@@ -31,7 +31,10 @@ class GGen():
 
 
     def __init__(self, _rootET):
-        self.rootET = _rootET
+        self.tree = []
+
+        for cEl in self.iterateTree(_rootET):
+            self.tree.append(cEl)
 
 
 
@@ -81,9 +84,7 @@ class GGen():
 
         matrixAcc = []
         prevDep = 0
-        cTree = []
-        self.iterateTree(self.rootET, cTree)
-        for cDep, cShape in cTree:
+        for cDep, cShape in self.tree:
             if cDep <= prevDep: #out of branch
                 matrixAcc = matrixAcc[:(cDep-prevDep-1)]
             prevDep = cDep
@@ -124,7 +125,7 @@ class GGen():
 
 
 
-    def iterateTree(self, _el, _treeA, _dep=0,):
+    def iterateTree(self, _el, _dep=0,):
         try:
             _, cTag = _el.tag.split('}')
         except ValueError:
@@ -140,14 +141,14 @@ class GGen():
             shape_class = getattr(shapes, cTag)
             cShape = shape_class(_el)
 
-            _treeA.append([_dep, cShape])
+            yield [_dep, cShape]
 
         else:
             _dep -= 1 #roll back unknown tag
 
 
         for cEl in _el:
-            self.iterateTree(cEl, _treeA, _dep+1)
+            yield from self.iterateTree(cEl, _dep+1)
 
 
 
