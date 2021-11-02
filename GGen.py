@@ -30,6 +30,33 @@ class GGen():
 
 
 
+    def iterateTree(self, _el, _dep=0,):
+        try:
+            _, cTag = _el.tag.split('}')
+        except ValueError:
+            print('Skip tag:', _el.tag)
+            return
+
+
+        if (
+            (cTag in self.svg_shapes)
+            and (_el.get('display') != 'none')
+            and (_el.get('visibility') != 'hidden')
+        ):
+            shape_class = getattr(shapes, cTag)
+            cShape = shape_class(_el)
+
+            yield [_dep, cShape]
+
+        else:
+            _dep -= 1 #roll back unknown tag
+
+
+        for cEl in _el:
+            yield from self.iterateTree(cEl, _dep+1)
+
+
+
     def __init__(self, _rootET):
         self.tree = []
 
@@ -122,34 +149,6 @@ class GGen():
 
 
 ###private###
-
-
-
-    def iterateTree(self, _el, _dep=0,):
-        try:
-            _, cTag = _el.tag.split('}')
-        except ValueError:
-            print('Skip tag:', _el.tag)
-            return
-
-
-        if (
-            (cTag in self.svg_shapes)
-            and (_el.get('display') != 'none')
-            and (_el.get('visibility') != 'hidden')
-        ):
-            shape_class = getattr(shapes, cTag)
-            cShape = shape_class(_el)
-
-            yield [_dep, cShape]
-
-        else:
-            _dep -= 1 #roll back unknown tag
-
-
-        for cEl in _el:
-            yield from self.iterateTree(cEl, _dep+1)
-
 
 
     def shapeGen(self, _shape, _xform):
