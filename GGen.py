@@ -38,11 +38,7 @@ class GGen():
             return
 
 
-        if (
-            (cTag in self.svg_shapes)
-            and (_el.get('display') != 'none')
-            and (_el.get('visibility') != 'hidden')
-        ):
+        if cTag in self.svg_shapes:
             shape_class = getattr(shapes, cTag)
             cShape = shape_class(_el)
 
