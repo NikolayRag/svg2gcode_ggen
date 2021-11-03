@@ -10,8 +10,8 @@ class GGen():
     svg_shapes = ('g', 'rect', 'circle', 'ellipse', 'line', 'polyline', 'polygon', 'path')
 
 
-    root = None
-    tree = None
+    _root = None
+    _tree = None
 
     xform = [[1.0, 0.0, 0.0], [0.0, -1.0, 0.0]]
     smoothness = 0.02
@@ -54,22 +54,22 @@ class GGen():
 
 
     def __init__(self, _root):
-        self.root = _root
-        self.tree = []
+        self._root = _root
+        self._tree = []
 
-        for cEl in self.iterateTree(self.root):
+        for cEl in self.iterateTree(self._root):
             if cEl.isgeo():
-                self.tree.append(cEl)
+                self._tree.append(cEl)
 
 
 
-    def getRoot(self):
-        return self.root
+    def root(self):
+        return self._root
 
 
 
-    def getTree(self):
-        return self.tree
+    def tree(self):
+        return self._tree
 
 
 
@@ -119,7 +119,7 @@ class GGen():
 
         matrixAcc = []
         prevDep = 0
-        for cShape in self.tree:
+        for cShape in self._tree:
             cXform = cShape.transformation_matrix(self.xform)
             pointsA = self.shapeGen(cShape, cXform)
 
