@@ -43,6 +43,8 @@ class SvgTag(object):
     def xml(self):
         return self.xml_node
 
+    def type(self):
+        return self.__class__.__name__
 
     def cubicPath(self, xform=True):
         dPath = self.d_path()
