@@ -60,6 +60,15 @@ class SvgTag(object):
         return "<path d=\"" + dPath + "\"/>"
 
 
+    def bBox(self, _fine=False):
+        cPath = self.cubicPath()
+
+        if _fine:
+            return simpletransform.refinedBBox(cPath)
+
+        return simpletransform.roughBBox(cPath)
+
+
     def cubicPath(self, xform=True):
         dPath = self.d_path()
         if not dPath:
