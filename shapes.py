@@ -41,10 +41,6 @@ class SvgTag(object):
         self._data = _data
 
 
-    def d_path(self):
-        raise NotImplementedError
-
-
     def transformation_matrix(self, _parent=None):
         if not _parent:
             return self.mat
@@ -52,21 +48,24 @@ class SvgTag(object):
         return simpletransform.composeTransform(_parent, self.mat)
 
 
+    def bBox(self, _fine=False):
+        cPath = self.cubicPath(True)
+
+        if _fine:
+            return simpletransform.refinedBBox(cPath)
+
+        return simpletransform.roughBBox(cPath)
+
+
+    def d_path(self):
+        raise NotImplementedError
+
     def svg_path(self):
         dPath = self.d_path()
         if not dPath:
             return
 
         return "<path d=\"" + dPath + "\"/>"
-
-
-    def bBox(self, _fine=False):
-        cPath = self.cubicPath()
-
-        if _fine:
-            return simpletransform.refinedBBox(cPath)
-
-        return simpletransform.roughBBox(cPath)
 
 
     def cubicPath(self, xform=True):
