@@ -95,9 +95,6 @@ class g(SvgTag):
      def __init__(self, xml_node, _parentMat=None):
         super(g, self).__init__(xml_node, _parentMat)
 
-     def d_path(self):
-        return False
-
      def isgeo(self):
         return False
 
