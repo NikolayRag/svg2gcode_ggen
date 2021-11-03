@@ -24,22 +24,6 @@ class SvgTag(object):
 
         self.xml_node = xml_node 
 
-    def d_path(self):
-        raise NotImplementedError
-
-    def transformation_matrix(self, _parent=None):
-        if not _parent:
-            return self.mat
-
-        return simpletransform.composeTransform(_parent, self.mat)
-
-
-    def svg_path(self):
-        dPath = self.d_path()
-        if not dPath:
-            return
-
-        return "<path d=\"" + dPath + "\"/>"
 
     def xml(self):
         return self.xml_node
@@ -55,6 +39,26 @@ class SvgTag(object):
 
     def setData(self, _data):
         self._data = _data
+
+
+    def d_path(self):
+        raise NotImplementedError
+
+
+    def transformation_matrix(self, _parent=None):
+        if not _parent:
+            return self.mat
+
+        return simpletransform.composeTransform(_parent, self.mat)
+
+
+    def svg_path(self):
+        dPath = self.d_path()
+        if not dPath:
+            return
+
+        return "<path d=\"" + dPath + "\"/>"
+
 
     def cubicPath(self, xform=True):
         dPath = self.d_path()
