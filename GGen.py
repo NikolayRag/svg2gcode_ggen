@@ -67,6 +67,11 @@ class GGen():
 
 
 
+    def getTree(self):
+        return self.tree
+
+
+
     def setDevice(self,
         feedRate = None,
         park = None,
