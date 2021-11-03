@@ -30,7 +30,7 @@ class GGen():
 
 
 
-    def iterateTree(self, _el, _dep=0,):
+    def iterateTree(self, _el, _dep=0, _matrix=None):
         try:
             _, cTag = _el.tag.split('}')
         except ValueError:
@@ -40,16 +40,18 @@ class GGen():
 
         if cTag in self.svg_shapes:
             shape_class = getattr(shapes, cTag)
-            cShape = shape_class(_el)
+            cShape = shape_class(_el, _matrix)
 
             yield [_dep, cShape]
+
+            _matrix = cShape.transformation_matrix()
 
         else:
             _dep -= 1 #roll back unknown tag
 
 
         for cEl in _el:
-            yield from self.iterateTree(cEl, _dep+1)
+            yield from self.iterateTree(cEl, _dep+1, _matrix)
 
 
 
@@ -108,18 +110,7 @@ class GGen():
         matrixAcc = []
         prevDep = 0
         for cDep, cShape in self.tree:
-            if cDep <= prevDep: #out of branch
-                matrixAcc = matrixAcc[:(cDep-prevDep-1)]
-            prevDep = cDep
-
-            matrixAcc.append(cShape.transformation_matrix())
-
-
-            cXform = self.xform
-            for m in matrixAcc:
-                if m:
-                    cXform = simpletransform.composeTransform(cXform, m)
-
+            cXform = cShape.transformation_matrix(self.xform)
             shapesA = self.shapeGen(cShape, cXform)
 
             el = self.shapeDecorate(cShape.xml(), shapesA)
