@@ -10,6 +10,7 @@ class GGen():
     svg_shapes = ('g', 'rect', 'circle', 'ellipse', 'line', 'polyline', 'polygon', 'path')
 
 
+    root = None
     tree = None
 
     xform = [[1.0, 0.0, 0.0], [0.0, -1.0, 0.0]]
@@ -52,17 +53,17 @@ class GGen():
 
 
 
-    def __init__(self, _rootET):
-        self.eroot = _rootET
+    def __init__(self, _root):
+        self.root = _root
         self.tree = []
 
-        for cEl in self.iterateTree(_rootET):
+        for cEl in self.iterateTree(self.root):
             self.tree.append(cEl)
 
 
 
     def getRoot(self):
-        return self.eroot
+        return self.root
 
 
 
