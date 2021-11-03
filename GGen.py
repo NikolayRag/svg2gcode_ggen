@@ -53,10 +53,16 @@ class GGen():
 
 
     def __init__(self, _rootET):
+        self.eroot = _rootET
         self.tree = []
 
         for cEl in self.iterateTree(_rootET):
             self.tree.append(cEl)
+
+
+
+    def getRoot(self):
+        return self.eroot
 
 
 
