@@ -120,9 +120,9 @@ class GGen():
         prevDep = 0
         for cShape in self.tree:
             cXform = cShape.transformation_matrix(self.xform)
-            shapesA = self.shapeGen(cShape, cXform)
+            pointsA = self.shapeGen(cShape, cXform)
 
-            el = self.shapeDecorate(cShape.xml(), shapesA)
+            el = self.shapeDecorate(cShape.xml(), pointsA)
             yield el
 
 
@@ -164,7 +164,7 @@ class GGen():
 
 
 
-    def shapeDecorate(self, _cEl, _shapes, _outCode=None):
+    def shapeDecorate(self, _cEl, _pointsA, _outCode=None):
         if not _outCode: _outCode = []
 
 
@@ -175,10 +175,10 @@ class GGen():
 
 
         cI = 0
-        for cShape in _shapes:
+        for cShape in _pointsA:
             if len(cShape):
                 injectIn = self.buildInline(self.shapeIn, _cEl, cShape[0])
-                injectOut = self.buildInline(self.shapeOut, _cEl, [_shapes, cI])
+                injectOut = self.buildInline(self.shapeOut, _cEl, [_pointsA, cI])
 
                 _outCode += [injectPre or '']
                 _outCode += self.buildMove(cShape[0])
