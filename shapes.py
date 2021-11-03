@@ -26,8 +26,12 @@ class SvgTag(object):
     def d_path(self):
         raise NotImplementedError
 
-    def transformation_matrix(self):
-        return self.mat
+    def transformation_matrix(self, _parent=None):
+        if not _parent:
+            return self.mat
+
+        return simpletransform.composeTransform(_parent, self.mat)
+
 
     def svg_path(self):
         dPath = self.d_path()
