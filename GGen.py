@@ -30,14 +30,12 @@ class GGen():
     templateG = 'X{x}Y{y}'
 
 
+    nslen = 0
+
+
 
     def iterateTree(self, _el, _matrix=None):
-        try:
-            _, cTag = _el.tag.split('}')
-        except ValueError:
-            print('Skip tag:', _el.tag)
-            return
-
+        cTag = _el.tag[self.nslen:]
 
         if cTag in self.svg_shapes:
             shape_class = getattr(shapes, cTag)
@@ -56,6 +54,7 @@ class GGen():
     def __init__(self, _root):
         self._root = _root
         self._tree = []
+        self.nslen = len(self._root.tag)-3 if self._root.tag[-3:]=='svg' else 0
 
         for cEl in self.iterateTree(self._root):
             if cEl.isgeo():
