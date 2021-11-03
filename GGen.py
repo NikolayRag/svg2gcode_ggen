@@ -58,7 +58,8 @@ class GGen():
         self.tree = []
 
         for cEl in self.iterateTree(self.root):
-            self.tree.append(cEl)
+            if cEl.isgeo():
+                self.tree.append(cEl)
 
 
 
@@ -119,9 +120,6 @@ class GGen():
         matrixAcc = []
         prevDep = 0
         for cShape in self.tree:
-            if not cShape.isgeo():
-                continue
-
             cXform = cShape.transformation_matrix(self.xform)
             pointsA = self.shapeGen(cShape, cXform)
 
