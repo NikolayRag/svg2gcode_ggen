@@ -119,6 +119,9 @@ class GGen():
         matrixAcc = []
         prevDep = 0
         for cShape in self.tree:
+            if not cShape.isgeo():
+                continue
+
             cXform = cShape.transformation_matrix(self.xform)
             pointsA = self.shapeGen(cShape, cXform)
 
