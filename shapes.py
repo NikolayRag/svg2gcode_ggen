@@ -22,7 +22,7 @@ class SvgTag(object):
             self.mat = simpletransform.composeTransform(_parentMat, self.mat)
 
         self.xml_node = xml_node 
- 
+
     def d_path(self):
         raise NotImplementedError
 
@@ -189,7 +189,7 @@ class line(SvgTag):
 
 class polycommon(SvgTag):
 
-    def __init__(self, xml_node, polytype, _parentMat=None):
+    def __init__(self, xml_node, _parentMat=None):
         super(polycommon, self).__init__(xml_node, _parentMat)
         self.points = list()
 
@@ -205,7 +205,7 @@ class polycommon(SvgTag):
 class polygon(polycommon):
 
     def __init__(self, xml_node, _parentMat=None):
-         super(polygon, self).__init__(xml_node, 'polygon', _parentMat)
+         super(polygon, self).__init__(xml_node, _parentMat)
 
     def d_path(self):
         d = "M " + self.points[0]
@@ -217,7 +217,7 @@ class polygon(polycommon):
 class polyline(polycommon):
 
     def __init__(self, xml_node, _parentMat=None):
-         super(polyline, self).__init__(xml_node, 'polyline', _parentMat)
+         super(polyline, self).__init__(xml_node, _parentMat)
 
     def d_path(self):
         d = "M " + self.points[0]
