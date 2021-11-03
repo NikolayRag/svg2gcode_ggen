@@ -13,13 +13,13 @@ class SvgTag(object):
     mat = [[1.0, 0.0, 0.0], [0.0, 1.0, 0.0]]
 
     
-    def __init__(self, xml_node, _parentMat=None):
+    def __init__(self, xml_node, _parent=None):
         t = xml_node.get('transform')
         if t:
             self.mat = simpletransform.parseTransform(t)
 
-        if _parentMat:
-            self.mat = simpletransform.composeTransform(_parentMat, self.mat)
+        if _parent:
+            self.mat = simpletransform.composeTransform(_parent, self.mat)
 
         self.xml_node = xml_node 
 
