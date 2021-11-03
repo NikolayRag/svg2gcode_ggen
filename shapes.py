@@ -103,6 +103,14 @@ class SvgTag(object):
                 prevsp = csp
 
 
+class svg(SvgTag):
+     def __init__(self, xml_node, _parentMat=None):
+        super(svg, self).__init__(xml_node, _parentMat)
+
+     def isgeo(self):
+        return False
+
+
 class g(SvgTag):
      def __init__(self, xml_node, _parentMat=None):
         super(g, self).__init__(xml_node, _parentMat)

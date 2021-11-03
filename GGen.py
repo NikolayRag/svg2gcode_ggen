@@ -7,7 +7,7 @@ from . import simpletransform
 
 
 class GGen():
-    svg_shapes = ('g', 'rect', 'circle', 'ellipse', 'line', 'polyline', 'polygon', 'path')
+    svg_shapes = ('svg', 'g', 'rect', 'circle', 'ellipse', 'line', 'polyline', 'polygon', 'path')
 
 
     _root = None
