@@ -59,15 +59,24 @@ class GGen():
 
         vbox = self._root.get('viewBox', "0 0 1 1").split()
         vx = self._root.get('width', None)
-        vx = ''.join([ c for c in vx if c.isdigit() or c=='.' ]) if vx else vbox[2]
+        if vx and vx[-1]=='%':
+            vx = float(vx[:-1]) *.01
+        else:
+            vx = ''.join([ c for c in vx if c.isdigit() or c=='.' ]) if vx else vbox[2]
+            vx = float(vx) /float(vbox[2])
 
         vy = self._root.get('height', None)
-        vy = ''.join([ c for c in vy if c.isdigit() or c=='.'] ) if vy else vbox[3]
+        if vy and vy[-1]=='%':
+            vy = float(vy[:-1]) *.01
+        else:
+            vy = ''.join([ c for c in vy if c.isdigit() or c=='.'] ) if vy else vbox[3]
+            vy = float(vy) /float(vbox[3])
 
         cMatrix = [
-            [float(vx)/float(vbox[2]),0,-float(vbox[0])],
-            [0,float(vy)/float(vbox[3]),-float(vbox[1])]
+            [vx,0,-float(vbox[0])*vx],
+            [0,vy,-float(vbox[1])*vy]
         ]
+
         for cEl in self.iterateTree(self._root, cMatrix):
             if cEl.isgeo():
                 self._tree.append(cEl)
