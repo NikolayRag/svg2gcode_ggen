@@ -56,7 +56,19 @@ class GGen():
         self._tree = []
         self.nslen = len(self._root.tag)-3 if self._root.tag[-3:]=='svg' else 0
 
-        for cEl in self.iterateTree(self._root):
+
+        vbox = self._root.get('viewBox', "0 0 1 1").split()
+        vx = self._root.get('width', None)
+        vx = ''.join([ c for c in vx if c.isdigit() or c=='.' ]) if vx else vbox[2]
+
+        vy = self._root.get('height', None)
+        vy = ''.join([ c for c in vy if c.isdigit() or c=='.'] ) if vy else vbox[3]
+
+        cMatrix = [
+            [float(vx)/float(vbox[2]),0,-float(vbox[0])],
+            [0,float(vy)/float(vbox[3]),-float(vbox[1])]
+        ]
+        for cEl in self.iterateTree(self._root, cMatrix):
             if cEl.isgeo():
                 self._tree.append(cEl)
 
