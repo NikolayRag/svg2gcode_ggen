@@ -51,32 +51,36 @@ class GGen():
 
 
 
-    def __init__(self, _root):
-        self._root = _root
-        self._tree = []
-        self.nslen = len(self._root.tag)-3 if self._root.tag[-3:]=='svg' else 0
-
-
-        vbox = self._root.get('viewBox', "0 0 1 1").split()
-        vx = self._root.get('width', None)
+    def svgVp(self, _root):
+        vbox = _root.get('viewBox', "0 0 1 1").split()
+        vx = _root.get('width', None)
         if vx and vx[-1]=='%':
             vx = float(vx[:-1]) *.01
         else:
             vx = ''.join([ c for c in vx if c.isdigit() or c=='.' ]) if vx else vbox[2]
             vx = float(vx) /float(vbox[2])
 
-        vy = self._root.get('height', None)
+        vy = _root.get('height', None)
         if vy and vy[-1]=='%':
             vy = float(vy[:-1]) *.01
         else:
             vy = ''.join([ c for c in vy if c.isdigit() or c=='.'] ) if vy else vbox[3]
             vy = float(vy) /float(vbox[3])
 
-        cMatrix = [
+        return [
             [vx,0,-float(vbox[0])*vx],
             [0,vy,-float(vbox[1])*vy]
         ]
 
+
+
+    def __init__(self, _root):
+        self._root = _root
+        self._tree = []
+        self.nslen = len(self._root.tag)-3 if self._root.tag[-3:]=='svg' else 0
+
+
+        cMatrix = self.svgVp(_root)
         for cEl in self.iterateTree(self._root, cMatrix):
             if cEl.isgeo():
                 self._tree.append(cEl)
