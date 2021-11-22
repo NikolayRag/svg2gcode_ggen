@@ -20,11 +20,11 @@ class GGen():
     feedRate = 0
     park = False
 
-    preamble = ''
+    preamble = []
     shapePre = ''
     shapeIn = ''
     shapeOut = ''
-    postamble = ''
+    postamble = []
 
 
     templateG = 'X{x}Y{y}'
@@ -127,6 +127,11 @@ class GGen():
         if shapeOut != None: self.shapeOut = shapeOut
         if postamble != None: self.postamble = postamble
 
+        if not isinstance(self.preamble, list):
+            self.preamble = [self.preamble]
+        if not isinstance(self.postamble, list):
+            self.postamble = [self.postamble]
+
 
     
     def generate(self,
@@ -137,8 +142,8 @@ class GGen():
         self.set(xform=xform, smoothness=smoothness, precision=precision)
 
 
-        el = self.buildHead()
-        yield el
+        for el in self.buildHead():
+            yield el
 
 
         matrixAcc = []
@@ -147,12 +152,12 @@ class GGen():
             cXform = cShape.transformation_matrix(self.xform)
             pointsA = self.shapeGen(cShape, cXform)
 
-            el = self.shapeDecorate(cShape, pointsA)
+            for el in self.shapeDecorate(cShape, pointsA):
+                yield el
+
+
+        for el in self.buildTail():
             yield el
-
-
-        el = self.buildTail()
-        yield el
 
 
 
@@ -195,21 +200,26 @@ class GGen():
 
         injectPre = self.buildInline(self.shapePre, _shape)
 
-        if injectPre == False:
-            return _outCode
-
-
         cI = 0
         for cShape in _pointsA:
             if len(cShape):
                 injectIn = self.buildInline(self.shapeIn, _shape, cShape[0])
                 injectOut = self.buildInline(self.shapeOut, _shape, [_pointsA, cI])
 
-                _outCode += [injectPre or '']
+                for g in injectPre:
+                    if g == False:
+                        return _outCode
+                    _outCode.append(g)
+
                 _outCode += self.buildMove(cShape[0])
-                _outCode += [injectIn or '']
+
+                for g in injectIn:
+                    _outCode.append(g)
+
                 _outCode += self.buildMove(cShape[1:])
-                _outCode += [injectOut or '']
+
+                for g in injectOut:
+                    _outCode.append(g)
 
             cI += 1
 
@@ -225,6 +235,9 @@ class GGen():
             else:
                 _tmpl = _tmpl(_shape)
 
+        if not isinstance(_tmpl, list):
+            _tmpl = [_tmpl]
+
         return _tmpl
 
 
@@ -239,9 +252,7 @@ class GGen():
 
 
     def buildHead(self):
-        out = []
-
-        out.append(self.preamble)
+        out = [] +self.preamble
 
         if self.feedRate:
             out.append( f'F{self.feedRate}' )
@@ -256,7 +267,7 @@ class GGen():
         if self.park:
             out.append( self.buildMove((0,0)) )
 
-        out.append(self.postamble)
+        out += self.postamble
 
         return out
 
