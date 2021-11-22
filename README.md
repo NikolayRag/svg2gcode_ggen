@@ -58,26 +58,28 @@ where **gEntity** will be complete list of G-commands.
 
 In addition to being strings, **shapePre**, **shapeIn** and **shapeOut** passed can be hook functions to generate inline:
 
-* **shapePre(currentSvgElement)**  
+* **shapePre(currentSvgTag)**  
     Called once, inlined before starting point of each sub-shape.
     May return False to skip shape entirely.
 
-* **shapeIn(currentSvgElement, pointZero)**  
+* **shapeIn(currentSvgTag, pointZero)**  
     Called for each sub-shape, inlined after starting point
     
-* **shapeOut(currentSvgElement, [[shapePointsList, ..], shapeId])**  
+* **shapeOut(currentSvgTag, [[shapePointsList, ..], shapeId])**  
     Called for each sub-shape and inlined after last point
+
+All hook functions should return either value or list of values.
 
 
 ```python
-def shapePreHook(_element):
-    print( f"(pre for {_element.tag})" )
+def shapePreHook(_tag):
+    print( f"(pre for {_tag})" )
 
-def shapeInHook(_element, _point):
-    print( f"(in for {_element.tag}, starting at {_point})" )
+def shapeInHook(_tag, _point):
+    print( f"(in for {_tag}, starting at {_point})" )
 
-def shapeOutHook(_element, _shapes):
-    print( f"(out for {_element.tag}, {len(_shapes[0])}")
+def shapeOutHook(_tag, _shapes):
+    print( f"(out for {_tag}, {len(_shapes[0])}")
     shapeId = _shapes[1]
     print( f"current shape: {shapeId} with {len(_shapes[shapeId])})" )
 

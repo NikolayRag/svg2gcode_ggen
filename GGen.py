@@ -92,6 +92,9 @@ class GGen():
 
 
 
+    '''
+    Stored SVG to be generated over further.
+    '''
     def tree(self):
         return self._tree
 
