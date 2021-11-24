@@ -53,19 +53,20 @@ class GGen():
 
     def svgVp(self, _root):
         vbox = _root.get('viewBox', "0 0 1 1").split()
+
         vx = _root.get('width', None)
         if vx and vx[-1]=='%':
-            vx = float(vx[:-1]) *.01
+            vx = float(vx[:-1]) *.01 *float(vbox[2])
         else:
             vx = ''.join([ c for c in vx if c.isdigit() or c=='.' ]) if vx else vbox[2]
-            vx = float(vx) /float(vbox[2])
+        vx = int(float(vx)) /float(vbox[2])
 
         vy = _root.get('height', None)
         if vy and vy[-1]=='%':
-            vy = float(vy[:-1]) *.01
+            vy = float(vy[:-1]) *.01 *float(vbox[3])
         else:
             vy = ''.join([ c for c in vy if c.isdigit() or c=='.'] ) if vy else vbox[3]
-            vy = float(vy) /float(vbox[3])
+        vy = int(float(vy)) /float(vbox[3])
 
         return [
             [vx,0,-float(vbox[0])*vx],
