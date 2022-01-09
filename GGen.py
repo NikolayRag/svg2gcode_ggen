@@ -143,18 +143,15 @@ class GGen():
         smoothness = None,
         precision = None,
     ):
-        self.set(xform=xform, smoothness=smoothness, precision=precision)
-
-
         for el in self.buildHead():
             yield el
 
 
         for cShape in self._tree:
-            cXform = cShape.transformation_matrix(self.xform)
-            pointsA = self.shapeGen(cShape, cXform)
+            cXform = cShape.transformation_matrix(xform or self.xform)
+            pointsA = self.shapeGen(cShape, cXform, smoothness or self.smoothness)
 
-            for el in self.shapeDecorate(cShape, pointsA):
+            for el in self.shapeDecorate(cShape, pointsA, precision=precision or self.precision):
                 yield el
 
 
@@ -179,11 +176,11 @@ class GGen():
 ###private###
 
 
-    def shapeGen(self, _shape, _xform):
+    def shapeGen(self, _shape, _xform, _smoothness):
         gShapesA = []
 
         cGShape = []
-        p = _shape.divide(self.smoothness, _xform)
+        p = _shape.divide(_smoothness, _xform)
         for x,y,start in p:
             if start:
                 cGShape = []
@@ -196,7 +193,7 @@ class GGen():
 
 
 
-    def shapeDecorate(self, _shape, _pointsA, _outCode=None):
+    def shapeDecorate(self, _shape, _pointsA, _outCode=None, precision=None):
         if not _outCode: _outCode = []
 
 
@@ -213,12 +210,12 @@ class GGen():
                         return _outCode
                     _outCode.append(g)
 
-                _outCode += self.buildMove(cShape[0])
+                _outCode += self.buildMove(cShape[0], precision)
 
                 for g in injectIn:
                     _outCode.append(g)
 
-                _outCode += self.buildMove(cShape[1:])
+                _outCode += self.buildMove(cShape[1:], precision)
 
                 for g in injectOut:
                     _outCode.append(g)
@@ -244,12 +241,11 @@ class GGen():
 
 
 
-    def buildMove(self, _coords):
+    def buildMove(self, _coords, prec=None):
         if not isinstance(_coords[0], tuple):
             _coords = (_coords,)
 
-        p = self.precision
-        return [self.templateG.format(x=round(x,p), y=round(y,p)) for x,y in _coords]
+        return [self.templateG.format(x=round(x,prec), y=round(y,prec)) for x,y in _coords]
 
 
 
