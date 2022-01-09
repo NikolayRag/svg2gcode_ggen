@@ -143,20 +143,17 @@ class GGen():
         smoothness = None,
         precision = None,
     ):
-        for el in self.buildHead():
-            yield el
+        yield None, self.buildHead()
 
 
         for cShape in self._tree:
             cXform = cShape.transformation_matrix(xform or self.xform)
             pointsA = self.shapeGen(cShape, cXform, smoothness or self.smoothness)
 
-            for el in self.shapeDecorate(cShape, pointsA, precision=precision or self.precision):
-                yield el
+            yield cShape, self.shapeDecorate(cShape, pointsA, precision=precision or self.precision)
 
 
-        for el in self.buildTail():
-            yield el
+        yield None, self.buildTail()
 
 
 
@@ -166,8 +163,9 @@ class GGen():
         precision = None,
     ):
         gFlat = []
-        for g in self.generate(xform=xform, smoothness=smoothness, precision=precision):
-            gFlat += g
+        for s, gA in self.generate(xform=xform, smoothness=smoothness, precision=precision):
+            for g in gA:
+                gFlat += g
 
         return "\n".join(gFlat)
 
