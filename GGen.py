@@ -150,8 +150,6 @@ class GGen():
             yield el
 
 
-        matrixAcc = []
-        prevDep = 0
         for cShape in self._tree:
             cXform = cShape.transformation_matrix(self.xform)
             pointsA = self.shapeGen(cShape, cXform)
