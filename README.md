@@ -16,32 +16,25 @@ import GGen
 
 ggObject = GGen.GGen( svgXml.getroot() )
 
-ggObject.setDevice(
-    feedRate = 0,
-    park = False
-)
-
-#notice default xform is only Y-inverted matrix, WITHOUT positive area offset
+#notice default xform is only Y-inverted matrix
 ggObject.set(
     xform = [[1.0, 0.0, 0.0], [0.0, -1.0, 0.0]],
 
     smoothness = 0.02,
     precision = 4,
 
-    preamble = '',
     shapePre = '',
     shapeIn = '',
-    shapeOut = '',
-    postamble = ''
+    shapeOut = ''
 )
 
-for gEntity in ggObject.generate(
+for gShape, gList in ggObject.generate(
     xform = None,
 
     smoothness = None,
     precision = None
 ):
-    do_something_with( gEntity )
+    do_something_with( gList )
 
 #or
 
@@ -53,7 +46,8 @@ gString = ggObject.str(
 )
 
 ```
-where **gEntity** will be complete list of G-commands.
+where **gList** will be per-shape G-commands lists, and **gShape** is bound to SVG shape.
+**gShape** can be accessed iterating **.tree()**. **.setData()** and **.data()** can be used to store arbitrary data within shape.
 
 
 In addition to being strings, **shapePre**, **shapeIn** and **shapeOut** passed can be hook functions to generate inline:
@@ -65,8 +59,8 @@ In addition to being strings, **shapePre**, **shapeIn** and **shapeOut** passed 
 * **shapeIn(currentSvgTag, pointZero)**  
     Called for each sub-shape, inlined after starting point
     
-* **shapeOut(currentSvgTag, [[shapePointsList, ..], shapeId])**  
-    Called for each sub-shape and inlined after last point
+* **shapeOut(currentSvgTag, shapePointsList)**  
+    Called for each sub-shape and inlined after last point.
 
 All hook functions should return either value or list of values.
 
@@ -78,10 +72,8 @@ def shapePreHook(_tag):
 def shapeInHook(_tag, _point):
     print( f"(in for {_tag}, starting at {_point})" )
 
-def shapeOutHook(_tag, _shapes):
-    print( f"(out for {_tag}, {len(_shapes[0])}")
-    shapeId = _shapes[1]
-    print( f"current shape: {shapeId} with {len(_shapes[shapeId])})" )
+def shapeOutHook(_tag, _shape):
+    print( f"(out for {_tag}, {len(_shape)}")
 
 
 ggObject.set(
@@ -94,11 +86,9 @@ ggObject.set(
 Typical static config for laser engraver can be:
 ```python
 ggObject.set(
-    preamble = 'G90 M4 S0', #Set laser on with 0% bightness
     shapePre = 'G0', #Fast position
-    shapeIn = 'S100 G1',  #Set 100% laser bightness and start feed move
+    shapeIn = 'S1000 G1',  #Set 100% laser bightness and start feed move
     shapeOut = 'S0', #Set 0% laser bightness
-    postamble = 'M5 G0 X0Y0' #Set laser off and park
 )
 ```
 
