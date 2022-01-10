@@ -172,7 +172,7 @@ class GGen():
         for cShape in _pointsA:
             if len(cShape):
                 injectIn = self.buildInline(self.shapeIn, _shape, cShape[0])
-                injectOut = self.buildInline(self.shapeOut, _shape, [_pointsA, cI])
+                injectOut = self.buildInline(self.shapeOut, _shape, cShape)
 
                 for g in injectPre:
                     if g == False:
